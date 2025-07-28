@@ -1,0 +1,52 @@
+/*************** Reset *********************/
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+html {
+  text-wrap: pretty;
+}
+
+@font-face {
+  font-family: "Roundhand-Regular";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Roundhand-Regular"),
+    url("/assets/fonts/Roundhand Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Roundhand-Bold";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Roundhand-Bold"),
+    url("/assets/fonts/Roundhand Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "AstonScriptBold-Bold";
+  src:
+    url("/assets/fonts/Aston_Script.eot?") format("eot"),
+    url("/assets/fonts/Aston_Script.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "vamones";
+  src:
+    url("/assets/fonts/vamones-aygax.woff2") format("woff2"),
+    url("/assets/fonts/vamones-aygax.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}

@@ -1,0 +1,291 @@
+---
+const {
+  profil,
+  nummer,
+  fornavn,
+  efternavn,
+  bydel_by,
+  fodselsdato,
+  sex,
+  hgt,
+  eyes,
+  taget,
+  givet,
+  baggrund,
+  placering,
+  z,
+  card_id,
+} = Astro.props;
+---
+
+<div
+  class="card"
+  id={card_id}
+  style=`background-color: ${baggrund}; transform: translate${placering}; z-index: ${z};`
+>
+  <div class="grid_3-6">
+    <div>
+      <div class="flex_row">
+        <p class="arial">★☆★★</p>
+        <img src="assets/logo.svg" alt="" class="logo" />
+      </div>
+      <img class="portrait" src={profil} alt="" />
+    </div>
+    <div class="max">
+      <div style="margin-bottom: 0.5vw;">
+        <h1>Identifikation</h1>
+        <h2>Nummer #{nummer}</h2>
+      </div>
+      <div style="margin-bottom: 0.5vw;">
+        <h3>{fornavn}</h3>
+        <h3>{efternavn}</h3>
+      </div>
+      <div style="margin-bottom: 0.5vw;">
+        <h3>{bydel_by}</h3>
+        <h3>F.D. {fodselsdato}</h3>
+      </div>
+      <div class="flex_row2">
+        <div>
+          <h3>SEX</h3>
+          <h3>{sex}</h3>
+        </div>
+        <div>
+          <h3>Hgt</h3>
+          <h3>{hgt}</h3>
+        </div>
+        <div>
+          <h3>Eyes</h3>
+          <h3>{eyes}</h3>
+        </div>
+      </div>
+    </div>
+    <div>
+      <h4>{fornavn}</h4>
+    </div>
+    <div class="flex_row2" style="gap: 0.4vw;">
+      <p>UDS: {taget}</p>
+      <p class="red">UDL: {givet}</p>
+    </div>
+  </div>
+  <p class="star">✪</p>
+  <div class="portrait-mini">
+    <img src="assets/noise.png" alt="" class="noise" />
+    <img src={profil} alt="" />
+  </div>
+  <img src="assets/rat.png" alt="" class="rat" />
+  <img src="assets/city.png" alt="" class="city" />
+  <div class="card-overlay"></div>
+</div>
+
+<style>
+  /* Definer en base-skala som 1 på desktop */
+  :root {
+    --font-scale: 1;
+  }
+
+  /* Skifttyper med variabler */
+  h1 {
+    font-family: owners-wide, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: calc(1.1cqw * var(--font-scale));
+  }
+
+  h2 {
+    font-family: owners-narrow, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: calc(1.1cqw * var(--font-scale));
+  }
+
+  h3 {
+    font-family: owners-narrow, sans-serif;
+    font-weight: 500;
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: calc(0.9cqw * var(--font-scale));
+  }
+
+  h4 {
+    font-family: "AstonScriptBold-Bold";
+    text-align: center;
+    font-size: calc(1.3cqw * var(--font-scale));
+    line-height: 1.2;
+  }
+
+  p {
+    font-family: owners-narrow, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: calc(0.75cqw * var(--font-scale));
+  }
+
+  p {
+    font-family: owners-narrow, sans-serif;
+    font-weight: 700;
+    font-style: normal;
+    text-transform: uppercase;
+    font-size: calc(0.75cqw * var(--font-scale));
+  }
+
+  .arial {
+    font-family: Arial, sans-serif;
+    font-size: calc(0.8cqw * var(--font-scale));
+    line-height: 0px;
+    justify-content: center;
+  }
+
+  .arial2 {
+    font-family: owners-xxwide, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: calc(0.6cqw * var(--font-scale));
+    justify-content: center;
+    text-align: center;
+    margin-top: 4%;
+  }
+
+  .star {
+    position: absolute;
+    top: 2.2%;
+    right: 4%;
+    font-size: calc(3cqw * var(--font-scale));
+  }
+
+  #card-1,
+  #card-2,
+  #card-3 {
+    width: 24vw;
+    height: 15.2vw;
+    padding: 1vw;
+    border-radius: 0.4rem;
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transition:
+      transform 0.7s,
+      opacity 0.3s;
+    filter: drop-shadow(0 0px 5px rgba(0, 0, 0, 0.85));
+  }
+
+  .card:hover {
+    cursor: pointer;
+  }
+
+  .card-overlay {
+    width: 24vw;
+    height: 15.2vw;
+    border-radius: 0.4rem;
+    background-image: url(/assets/dots.jpg);
+    background-size: cover;
+    mix-blend-mode: multiply;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 5%;
+    pointer-events: none;
+  }
+
+  .card.grid-mode {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    z-index: auto !important;
+  }
+
+  .grid_3-6 {
+    display: grid;
+    grid-template-columns: 3fr 6fr;
+    gap: 0.5rem;
+  }
+
+  .flex_row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .flex_row2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1vw;
+  }
+
+  .logo {
+    width: 40%;
+    height: auto;
+    margin-top: 3%;
+  }
+
+  .portrait {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 0.1rem;
+  }
+
+  .portrait-mini {
+    position: absolute;
+    top: 28%;
+    right: 9%;
+    width: 17%;
+    height: auto;
+    opacity: 60%;
+  }
+
+  .noise {
+    mix-blend-mode: multiply;
+    position: absolute;
+  }
+
+  .rat {
+    position: absolute;
+    bottom: 2%;
+    right: 2%;
+    width: 25%;
+    height: auto;
+    opacity: 30%;
+  }
+
+  .city {
+    position: absolute;
+    bottom: 12%;
+    left: 0;
+    width: 75%;
+    height: auto;
+    z-index: -1;
+    mix-blend-mode: multiply;
+    opacity: 40%;
+  }
+
+  .max {
+    background-color: transparent;
+  }
+
+  .red {
+    color: red;
+  }
+
+  @media (max-width: 800px) {
+    /* Øg alle fontstørrelser med 25% på mobil */
+    :root {
+      --font-scale: 2;
+    }
+
+    #card-1,
+    #card-2,
+    #card-3 {
+      width: 45vw;
+      height: 28.5vw;
+    }
+  }
+</style>

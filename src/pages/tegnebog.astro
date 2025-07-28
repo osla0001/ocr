@@ -1,0 +1,314 @@
+---
+import Layout from "../layouts/Layout.astro";
+import cards from "../database/cards.jsx";
+import IdCard from "../components/IdCard.astro";
+import IdCardMap from "../components/IdCardMap.astro";
+---
+
+<Layout>
+  <h1 id="title">venne galleri</h1>
+  <section class="aspect-ratio-container">
+    <div class="aspect-ratio-content">
+      <div id="tegnebog" class="middle">
+        <img
+          class="purse purses"
+          src="assets/purse1.png"
+          alt=""
+          style="z-index: 1;"
+        />
+        <IdCard
+          profil="assets/profil.png"
+          nummer="0001"
+          fornavn="Oscar"
+          efternavn="Laursen"
+          bydel_by="Amager, København"
+          fodselsdato="15/10/2001"
+          sex="M"
+          hgt="187"
+          eyes="Blue"
+          taget="22/07/2025"
+          givet="22/07/2035"
+          baggrund="#F4E0E5"
+          placering="(-50%, -60%)"
+          z="1"
+          card_id="card-1"
+        />
+        <img
+          class="purses"
+          src="assets/purse2.png"
+          alt=""
+          style="z-index: 2;"
+        />
+        <IdCard
+          profil="assets/profil.png"
+          nummer="0001"
+          fornavn="Oscar"
+          efternavn="Laursen"
+          bydel_by="Amager, København"
+          fodselsdato="15/10/2001"
+          sex="M"
+          hgt="187"
+          eyes="Blue"
+          taget="22/07/2025"
+          givet="22/07/2035"
+          baggrund="#f4ede0"
+          placering="(-50%, -42%)"
+          z="2"
+          card_id="card-2"
+        />
+        <img
+          class="purses"
+          src="assets/purse3.png"
+          alt=""
+          style="z-index: 3;"
+        />
+        <IdCard
+          profil="assets/profil.png"
+          nummer="0001"
+          fornavn="Oscar"
+          efternavn="Laursen"
+          bydel_by="Amager, København"
+          fodselsdato="15/10/2001"
+          sex="M"
+          hgt="187"
+          eyes="Blue"
+          taget="22/07/2025"
+          givet="22/07/2035"
+          baggrund="#E3E0F4"
+          placering="(-50%, -76%)"
+          card_id="card-3"
+        />
+      </div>
+    </div>
+  </section>
+  <section class="display-none">
+    {cards.map((card) => <IdCardMap {...card} />)}
+  </section>
+</Layout>
+
+<script type="module">
+  window.addEventListener("DOMContentLoaded", () => {
+    const cards = [
+      document.getElementById("card-1"),
+      document.getElementById("card-2"),
+      document.getElementById("card-3"),
+    ];
+
+    // Check om vi er på mobil
+    const isMobile = window.innerWidth <= 800;
+
+    // Disable scrolling på body når siden indlæses
+    document.body.style.overflow = "hidden";
+
+    // HOVER-EFFEKT: Hover over kort i tegnebog for de løfter sig lidt
+    function onEnter(e) {
+      const card = e.currentTarget;
+      const originalTransform =
+        card.dataset.originalTransform || card.style.transform;
+      const match = (card.style.transform || originalTransform).match(
+        /translate\(([^,]+),\s*([^)]+)\)/,
+      );
+      const x = match ? match[1] : "-50%";
+      let y = match ? match[2] : "-50%";
+      const yMatch = y.match(/(-?\d+)(%?)/);
+      if (yMatch) {
+        let yNum = parseInt(yMatch[1], 10);
+        let yUnit = yMatch[2] || "";
+        yNum += -32;
+        y = `${yNum}${yUnit}`;
+      }
+      card.style.transform = `translate(${x}, ${y})`;
+    }
+
+    function onLeave(e) {
+      const card = e.currentTarget;
+      const originalTransform =
+        card.dataset.originalTransform || card.style.transform;
+      card.style.transform = originalTransform;
+    }
+
+    cards.forEach((card) => {
+      card.dataset.originalTransform = card.style.transform;
+      card.addEventListener("mouseenter", onEnter);
+      card.addEventListener("mouseleave", onLeave);
+
+      card.addEventListener(
+        "click",
+        function switchToGrid() {
+          // 1. Skjul purse-billeder
+          document.querySelectorAll(".purse, .purses").forEach((img) => {
+            img.style.transform += " translate(-50%, 80%)";
+            img.style.opacity = "0";
+            img.style.transition = "transform 0.7s, opacity 0.7s";
+            setTimeout(() => {
+              img.style.display = "none";
+            }, 700); // Skjul purses helt efter transition
+          });
+
+          // 2. Flyt kortene til grid-positioner (behold absolute)
+          if (isMobile) {
+            // Mobilversion - kort placeret vertikalt under hinanden
+            cards[0].style.transform = "translate(-50%, -140%)"; // Pink
+            cards[1].style.transform = "translate(-50%, -19%)"; // Gul
+            cards[2].style.transform = "translate(-50%, 104%)"; // Blå
+          } else {
+            // Desktop version - kort placeret horisontalt ved siden af hinanden
+            cards[0].style.transform = "translate(-168%, -135%)"; // Pink
+            cards[1].style.transform = "translate(-50%, -135%)"; // Gul
+            cards[2].style.transform = "translate(68%, -135%)"; // Blå
+          }
+
+          cards.forEach((c) => {
+            c.style.transition = "transform 0.8s";
+            // Fjern hover-lyttere
+            c.removeEventListener("mouseenter", onEnter);
+            c.removeEventListener("mouseleave", onLeave);
+          });
+
+          // 3. Når transitionen er færdig, fade ud, skift til grid, fade ind
+          setTimeout(() => {
+            cards.forEach((c) => {
+              c.style.transition = "opacity 0.2s";
+              c.style.opacity = "0";
+            });
+
+            setTimeout(() => {
+              cards.forEach((c) => {
+                c.style.position = "relative";
+                c.style.removeProperty("top");
+                c.style.removeProperty("left");
+                c.style.removeProperty("transform");
+                c.style.removeProperty("z-index");
+                c.classList.add("grid-mode");
+                c.style.transition = "opacity 0.2s";
+                c.style.display = "none";
+              });
+              const tegnebog = document.getElementById("tegnebog");
+              if (tegnebog) {
+                tegnebog.classList.remove("middle");
+              }
+              // Skjul aspect-ratio-container
+              document.querySelector(".aspect-ratio-container").style.display =
+                "none";
+
+              // Genaktivér scrolling på body
+              document.body.style.overflow = "auto";
+
+              // Find sektionen og tilføj grid2-klassen
+              const mapSection = document.querySelector("section.display-none");
+              if (mapSection) {
+                mapSection.classList.remove("display-none");
+                mapSection.classList.add("grid");
+              }
+            }, 0); // fade ud, skift, fade ind
+          }, 700); // matcher din transition-tid
+        },
+        { once: true },
+      );
+    });
+
+    // Lyt efter vinduesstørrelse-ændringer for at opdatere isMobile
+    window.addEventListener("resize", () => {
+      const newIsMobile = window.innerWidth <= 800;
+      if (newIsMobile !== isMobile) {
+        location.reload(); // Genindlæs siden hvis vi skifter mellem mobil/desktop
+      }
+    });
+  });
+</script>
+
+<style>
+  #title {
+    font-family: "vamones", sans-serif;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 3.5rem;
+    text-align: center;
+    margin-top: 1rem;
+    color: #333;
+    display: none;
+  }
+
+  .aspect-ratio-container {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio (56.25% = 9/16*100) */
+    max-height: 100vh;
+  }
+
+  .aspect-ratio-content {
+    position: absolute;
+    top: -1%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .purse {
+    filter: drop-shadow(0 20px 20px rgba(0, 0, 0, 0.85));
+  }
+
+  .purses {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 35%;
+    display: block;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  /* .middle {
+    height: 100vh;
+    width: 100vw;
+    align-items: center;
+    justify-content: center;
+  } */
+
+  /* .grid {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    justify-items: center;
+    gap: 4.3vw;
+    justify-content: center;
+    margin-top: 7%;
+  } */
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, max-content);
+    justify-items: center;
+    gap: 4.3vw;
+    justify-content: center;
+    padding-bottom: 5vw;
+    padding-top: 7.5%;
+  }
+
+  /* Media query for mobilversion */
+  @media (max-width: 800px) {
+    .grid {
+      grid-template-columns: max-content;
+      gap: 6vw;
+      padding-top: 10%;
+    }
+
+    .aspect-ratio-container {
+      padding-top: 100%; /* Mere vertikalt format til mobil (3:2 format) */
+    }
+
+    .purses {
+      width: 65%; /* Større punge på mobil */
+    }
+  }
+
+  .display-none {
+    display: none;
+  }
+
+  #tegnebog {
+    overflow-y: hidden;
+  }
+</style>
