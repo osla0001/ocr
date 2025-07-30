@@ -2,7 +2,7 @@
 const events = [
   {
     id: 1,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0001",
     fornavn: "Oscar",
     efternavn: "Laursen",
@@ -18,7 +18,7 @@ const events = [
   },
   {
     id: 2,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0002",
     fornavn: "Parnoosh",
     efternavn: "Zamani",
@@ -34,7 +34,7 @@ const events = [
   },
   {
     id: 3,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0001",
     fornavn: "Oscar",
     efternavn: "Laursen",
@@ -50,7 +50,7 @@ const events = [
   },
   {
     id: 4,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0001",
     fornavn: "Oscar",
     efternavn: "Laursen",
@@ -66,7 +66,7 @@ const events = [
   },
   {
     id: 5,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0001",
     fornavn: "Oscar",
     efternavn: "Laursen",
@@ -82,7 +82,7 @@ const events = [
   },
   {
     id: 6,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0001",
     fornavn: "Oscar",
     efternavn: "Laursen",
@@ -98,7 +98,7 @@ const events = [
   },
   {
     id: 7,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0001",
     fornavn: "Oscar",
     efternavn: "Laursen",
@@ -114,7 +114,7 @@ const events = [
   },
   {
     id: 8,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0001",
     fornavn: "Oscar",
     efternavn: "Laursen",
@@ -131,7 +131,7 @@ const events = [
   },
   {
     id: 9,
-    profil: "assets/profil.png",
+    profil: "/assets/profil.png",
     nummer: "0001",
     fornavn: "Oscar",
     efternavn: "Laursen",

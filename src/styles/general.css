@@ -16,37 +16,37 @@ html {
 }
 
 @font-face {
-  font-family: "Roundhand-Regular";
+  font-family: "RoundhandRegular";
   font-style: normal;
   font-weight: normal;
   src:
     local("Roundhand-Regular"),
-    url("/assets/fonts/roundhand_regular.woff") format("woff");
+    url("/fonts/roundhand_regular.woff") format("woff");
 }
 
 @font-face {
-  font-family: "Roundhand-Bold";
+  font-family: "RoundhandBold";
   font-style: normal;
   font-weight: normal;
   src:
     local("Roundhand-Bold"),
-    url("/assets/fonts/roundhand_old.woff") format("woff");
+    url("/fonts/roundhand_old.woff") format("woff");
 }
 
 @font-face {
-  font-family: "AstonScriptBold-Bold";
+  font-family: "AstonScriptBold";
   src:
-    url("/assets/fonts/aston_script.woff") format("woff"),
-    url("/assets/fonts/aston_script.eot?") format("eot");
+    url("/fonts/aston_script.woff") format("woff"),
+    url("/fonts/aston_script.eot?") format("eot");
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: "vamones";
+  font-family: "Vamones";
   src:
-    url("/assets/fonts/vamones_aygax.woff2") format("woff2"),
-    url("/assets/fonts/vamones_aygax.woff") format("woff");
+    url("/fonts/vamones_aygax.woff2") format("woff2"),
+    url("/fonts/vamones_aygax.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
