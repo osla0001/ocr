@@ -73,19 +73,19 @@ import NavNumber from "./NavNumber.astro";
     const header = document.getElementById("sideHeader");
     const burger = document.querySelector(".burger");
     let mouseOnHeader = false;
-    
+
     // Tjek om vi er på mobil
     const isMobile = window.innerWidth <= 800;
-    
+
     if (isMobile) {
       // På mobil: Start med helt skjult menu
       header.classList.remove("expanded");
       header.classList.add("collapsed");
-      
+
       // Vis burgermenu og skjul arrow-indicator
       burger.style.display = "flex";
       document.querySelector(".arrow-indicator").style.display = "none";
-      
+
       // Toggle menu ved klik på burger
       burger.addEventListener("click", () => {
         if (header.classList.contains("collapsed")) {
@@ -96,19 +96,22 @@ import NavNumber from "./NavNumber.astro";
           header.classList.add("collapsed");
         }
       });
-      
+
       // Luk menu når der klikkes på links
-      document.querySelectorAll("nav a").forEach(link => {
+      document.querySelectorAll("nav a").forEach((link) => {
         link.addEventListener("click", () => {
           header.classList.remove("expanded");
           header.classList.add("collapsed");
         });
       });
-      
+
       // Luk menu når der klikkes udenfor
       document.addEventListener("click", (e) => {
-        if (!header.contains(e.target) && !burger.contains(e.target) && 
-            header.classList.contains("expanded")) {
+        if (
+          !header.contains(e.target) &&
+          !burger.contains(e.target) &&
+          header.classList.contains("expanded")
+        ) {
           header.classList.remove("expanded");
           header.classList.add("collapsed");
         }
@@ -116,23 +119,22 @@ import NavNumber from "./NavNumber.astro";
     } else {
       // Desktop: Behold det eksisterende hover-script
       let mouseInArea = false;
-      
+
       function isInRightArea(e) {
         return e.clientX >= window.innerWidth * 0.95;
       }
-      
+
       function handleMouseMove(e) {
         // Eksisterende desktop kode
         mouseInArea = isInRightArea(e);
-        
+
         const headerRect = header.getBoundingClientRect();
-        mouseOnHeader = (
+        mouseOnHeader =
           e.clientX >= headerRect.left &&
           e.clientX <= headerRect.right &&
           e.clientY >= headerRect.top &&
-          e.clientY <= headerRect.bottom
-        );
-        
+          e.clientY <= headerRect.bottom;
+
         if (mouseInArea || mouseOnHeader) {
           header.classList.add("expanded");
           header.classList.remove("collapsed");
@@ -141,16 +143,16 @@ import NavNumber from "./NavNumber.astro";
           header.classList.remove("expanded");
         }
       }
-      
+
       window.addEventListener("mousemove", handleMouseMove);
-      
+
       // Eksisterende mouseenter/mouseleave events
       header.addEventListener("mouseenter", () => {
         mouseOnHeader = true;
         header.classList.add("expanded");
         header.classList.remove("collapsed");
       });
-      
+
       header.addEventListener("mouseleave", () => {
         mouseOnHeader = false;
         if (!mouseInArea) {
@@ -158,7 +160,7 @@ import NavNumber from "./NavNumber.astro";
           header.classList.remove("expanded");
         }
       });
-      
+
       // Auto-luk efter 3 sekunder på desktop
       setTimeout(() => {
         if (!mouseInArea && !mouseOnHeader) {
@@ -425,46 +427,45 @@ import NavNumber from "./NavNumber.astro";
 
     .burger {
       display: block; /* Skjult som standard */
-    width: 40px;
-    height: 40px;
-    border: 2px solid black;
-    border-radius: 50%;
-    opacity: 1;
-    transition: opacity 0.4s;
-    z-index: 1100;
-    background-color: white;
-place-content: center;
-    position: absolute;
-    left: -50px;
-    top: 25px;
-    transform: translateY(-50%);
-    margin: 10px 0;
+      width: 40px;
+      height: 40px;
+      border: 2px solid black;
+      border-radius: 50%;
+      opacity: 1;
+      transition: opacity 0.4s;
+      z-index: 1100;
+      background-color: white;
+      place-content: center;
+      position: absolute;
+      left: -50px;
+      top: 25px;
+      transform: translateY(-50%);
+      margin: 10px 0;
     }
-  
 
     .burger h2 {
       font-family: Helvetica, sans-serif;
-letter-spacing: 0px;
-font-size: 1.2rem;
-font-weight: 100;
-width: fit-content;
-height: fit-content;
+      letter-spacing: 0px;
+      font-size: 1.2rem;
+      font-weight: 100;
+      width: fit-content;
+      height: fit-content;
       transform: rotate(90deg);
       text-align: center;
       place-self: center;
-         cursor: pointer;
-    z-index: 1100;
-    margin-left: 4px;
+      cursor: pointer;
+      z-index: 1100;
+      margin-left: 4px;
     }
 
-      /* Ændre header på mobil */
-  header {
-    width: 85vw; /* 90% af skærmbredden */
-  }
-  
-  /* Skjul header helt på mobil */
-  header.collapsed {
-    transform: translateX(100%); /* Skjul fuldstændigt */
-  }
+    /* Ændre header på mobil */
+    header {
+      width: 85vw; /* 90% af skærmbredden */
+    }
 
+    /* Skjul header helt på mobil */
+    header.collapsed {
+      transform: translateX(100%); /* Skjul fuldstændigt */
+    }
+  }
 </style>

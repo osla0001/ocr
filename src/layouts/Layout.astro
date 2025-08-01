@@ -1,13 +1,17 @@
 ---
 import Menu from "../components/Menu.astro";
 import "../styles/general.css";
+const { title, meta } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
+    <!-- Meta -->
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={meta} />
+    <meta name="author" content="Oscar Laursen" />
     <!-- Favicon -->
     <link
       rel="icon"
@@ -30,7 +34,13 @@ import "../styles/general.css";
       rel="stylesheet"
     />
     <link rel="stylesheet" href="https://use.typekit.net/kml0nth.css" />
-    <title>OÇR</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ballet:opsz@16..72&display=swap"
+      rel="stylesheet"
+    />
+    <title>OÇR - {title}</title>
   </head>
   <body>
     <Menu />

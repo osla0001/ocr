@@ -11,6 +11,10 @@ img {
   display: block;
 }
 
+:root {
+  --font-scale: 1;
+}
+
 html {
   text-wrap: pretty;
 }
@@ -47,6 +51,22 @@ html {
   src:
     url("/fonts/vamones_aygax.woff2") format("woff2"),
     url("/fonts/vamones_aygax.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+.ballet-regular {
+  font-family: "Ballet", cursive;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "alexandra_scriptregular";
+  src:
+    url("/fonts/alexandra_script.woff2") format("woff2"),
+    url("/fonts/alexandra_script.woff") format("woff");
   font-weight: normal;
   font-style: normal;
 }
