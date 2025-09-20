@@ -7,27 +7,34 @@ const { top, right, width, z, img1, img2 } = Astro.props;
   style={`position:absolute; top:${top}; left:${right}; width:${width}; height:auto; z-index:${z};`}
 >
   <img src="/assets/cd_1.png" alt="CD" class="cd1" />
-  <img src="/assets/cd_2.png" alt="CD2" class="cd2" id="cd2" />
+  <img src="/assets/cd_2.png" alt="CD2" class="cd2" />
+  <audio id="cd-audio" src="/assets/365.mp3"></audio>
+</div>
+<div class="container2">
+  <img src="/assets/cd_1.png" alt="CD" class="cd1" />
+  <img src="/assets/cd_2.png" alt="CD2" class="cd2" />
   <audio id="cd-audio" src="/assets/365.mp3"></audio>
 </div>
 
 <script is:inline>
   document.addEventListener("DOMContentLoaded", () => {
-    const cd2 = document.getElementById("cd2");
+    const cd2List = document.querySelectorAll(".cd2");
     const audio = document.getElementById("cd-audio");
     let spinning = false;
 
-    cd2.addEventListener("click", () => {
-      if (!spinning) {
-        audio.play();
-        cd2.classList.add("spinning");
-        cd2.style.animationPlayState = "running";
-        spinning = true;
-      } else {
-        audio.pause();
-        cd2.style.animationPlayState = "paused";
-        spinning = false;
-      }
+    cd2List.forEach((cd2) => {
+      cd2.addEventListener("click", () => {
+        if (!spinning) {
+          audio.play();
+          cd2.classList.add("spinning");
+          cd2.style.animationPlayState = "running";
+          spinning = true;
+        } else {
+          audio.pause();
+          cd2.style.animationPlayState = "paused";
+          spinning = false;
+        }
+      });
     });
 
     audio.addEventListener("ended", () => {
@@ -74,6 +81,22 @@ const { top, right, width, z, img1, img2 } = Astro.props;
     }
     to {
       transform: rotate(360deg);
+    }
+  }
+
+  .container2 {
+    display: none;
+  }
+
+  @media (max-width: 800px) {
+    .container2 {
+      display: block;
+      position: relative;
+      width: 50%;
+    }
+
+    .container {
+      display: none;
     }
   }
 </style>

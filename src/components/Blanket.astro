@@ -24,73 +24,161 @@ const { top, right, title, fontcolor, paper, z1, z2, deg } = Astro.props;
   <div class="intro">
     <slot />
   </div>
+</article>
 
-  <style>
+<article class="paper2 blanket-root" style=` background-image: url(${paper});`>
+  <img
+    src="assets/blanket.png"
+    alt="Pink blanket"
+    class="overlay"
+    style=`z-index: ${z2};`
+  />
+  <div class="flex-span">
+    <p class="document_head">sep 2025 <br />lisbon, portugal <br />odl</p>
+    <p class="document_head">oscar laursen <br />+45 50868563</p>
+    <p class="document_title" style={{ color: fontcolor }}>
+      <span class="title1" style=`color=${fontcolor}`>OMMIG</span>
+      <br /><span class="title2">PERSONLIGT DOKUMENT</span>
+      <br /><span class="title3">{title}</span>
+    </p>
+  </div>
+  <div class="intro">
+    <slot />
+  </div>
+</article>
+
+<style>
+  .paper {
+    position: absolute;
+    width: 27vw; /* bredde følger viewport */
+    height: auto;
+    background-size: contain;
+    aspect-ratio: 1/1.314;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
+    transition: transform 0.3s;
+    overflow: hidden;
+  }
+
+  .paper:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s;
+  }
+
+  .flex-span {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .document_head {
+    color: black;
+    font-family: "Courier New", Courier, monospace;
+    font-size: calc(0.5cqw * var(--font-scale));
+    -webkit-text-stroke: 0.02rem;
+    margin: 5%;
+  }
+
+  .document_title {
+    position: absolute;
+    text-align: center;
+    font-family: owners-xwide, sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: calc(0.8cqw * var(--font-scale));
+    -webkit-text-stroke: 0.02rem;
+    top: 9%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .document_title .title1 {
+    font-weight: 400;
+  }
+  .document_title .title2 {
+    font-size: calc(0.6cqw * var(--font-scale));
+  }
+  .document_title .title3 {
+    font-size: calc(1.2cqw * var(--font-scale));
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    mix-blend-mode: multiply;
+    pointer-events: none;
+    width: 27vw; /* bredde følger viewport */
+  }
+
+  .intro {
+    color: #0037ad;
+    font-family: "Courier New", Courier, monospace;
+    font-size: calc(0.7cqw * var(--font-scale));
+    -webkit-text-stroke: 0.02rem;
+    padding: 0 12%;
+  }
+
+  .paper2 {
+    display: none;
+    width: 70vw; /* bredde følger viewport */
+    height: auto;
+    background-image: url(assets/pink-blanket.png);
+    background-size: contain;
+    aspect-ratio: 1/1.314;
+    position: relative;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
+  }
+
+  .paper2 .document_head {
+    font-size: calc(1.5cqw * var(--font-scale)); /* 0.5 + 2 */
+  }
+  .paper2 .document_title {
+    font-size: calc(1.8cqw * var(--font-scale)); /* 0.8 + 2 */
+  }
+  .paper2 .document_title .title2 {
+    font-size: calc(1.6cqw * var(--font-scale)); /* 0.6 + 2 */
+  }
+  .paper2 .document_title .title3 {
+    font-size: calc(2.8cqw * var(--font-scale)); /* 1.2 + 2 */
+  }
+  .paper2 .intro {
+    font-size: calc(1.7cqw * var(--font-scale)); /* 0.7 + 2 */
+  }
+  .paper2 .outro {
+    font-size: calc(1.7cqw * var(--font-scale)); /* 0.7 + 2 */
+  }
+  .paper2 .small_title {
+    font-size: calc(1.4cqw * var(--font-scale)); /* 0.4 + 2 */
+  }
+  .paper2 .logo {
+    position: absolute;
+    width: 22%;
+    bottom: 5%;
+    right: 17%;
+    mix-blend-mode: darken;
+  }
+
+  @media (max-width: 800px) {
     .paper {
-      position: absolute;
-      width: 27vw; /* bredde følger viewport */
-      height: auto;
-      background-size: contain;
-      aspect-ratio: 1/1.314;
-      box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
-      transition: 0.3s;
+      display: none;
     }
-
-    .paper:hover {
-      scale: 1.02;
-      transition: 0.3s;
+    .paper2 {
+      display: block;
     }
-
-    .flex-span {
-      display: flex;
-      justify-content: space-between;
+    .overlay {
+      display: none;
     }
-
-    .document_head {
-      color: black;
-      font-family: "Courier New", Courier, monospace;
-      font-size: calc(0.5cqw * var(--font-scale));
-      -webkit-text-stroke: 0.02rem;
-      margin: 5%;
-    }
-
     .document_title {
       position: absolute;
       text-align: center;
+      color: #ce0000;
       font-family: owners-xwide, sans-serif;
       font-weight: 400;
       font-style: normal;
-      font-size: calc(0.8cqw * var(--font-scale));
-      -webkit-text-stroke: 0.02rem;
-      top: 9%;
+      top: 70%;
       left: 50%;
-      transform: translate(-50%, -50%);
     }
-
-    .document_title .title1 {
-      font-weight: 400;
+    .flex-span {
+      position: relative;
     }
-    .document_title .title2 {
-      font-size: calc(0.6cqw * var(--font-scale));
-    }
-    .document_title .title3 {
-      font-size: calc(1.2cqw * var(--font-scale));
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      mix-blend-mode: multiply;
-      pointer-events: none;
-    }
-
-    .intro {
-      color: #0037ad;
-      font-family: "Courier New", Courier, monospace;
-      font-size: calc(0.7cqw * var(--font-scale));
-      -webkit-text-stroke: 0.02rem;
-      padding: 0 12%;
-    }
-  </style>
-</article>
+  }
+</style>

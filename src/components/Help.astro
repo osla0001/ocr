@@ -1,4 +1,4 @@
-<div class="container">
+<div class="help_container">
   <div class="circle" id="help-circle">
     <h2 id="help-symbol">
       <span class="question-mark">?</span><span class="cross"></span>
@@ -11,7 +11,7 @@
   </div>
 
   <style>
-    .container {
+    .help_container {
       position: absolute; /* eller relative, hvis du vil placere den ift. parent */
       left: 2vw;
       top: 33vh;
@@ -145,7 +145,7 @@
         cross.classList.add("active");
         state = 1;
       } else {
-        document.querySelector(".container").style.display = "none";
+        document.querySelector(".help_container").style.display = "none";
       }
     });
   </script>

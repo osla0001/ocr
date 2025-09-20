@@ -69,4 +69,10 @@ const { top, left, width, z, img } = Astro.props;
   .drag_container.dragging {
     user-select: none;
   }
+
+  @media (max-width: 800px) {
+    .drag_container {
+      display: none;
+    }
+  }
 </style>

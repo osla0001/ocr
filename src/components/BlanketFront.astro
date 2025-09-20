@@ -59,6 +59,60 @@ const { top, right, z1, z2, deg } = Astro.props;
   </div>
   <img src="assets/ek_logo_paper.svg" alt="Pink blanket" class="logo" />
 </article>
+<article class="paper2 blanket-root">
+  <img
+    src="assets/blanket.png"
+    alt="Pink blanket"
+    class="overlay"
+    style=`z-index: ${z2};`
+  />
+  <div class="flex-span">
+    <p class="document_head">sep 2025 <br />lisbon, portugal <br />odl</p>
+    <p class="document_head">oscar laursen <br />+45 50868563</p>
+    <p class="document_title">
+      <span class="title1">OMMIG</span>
+      <br /><span class="title2">PERSONLIGT DOKUMENT</span>
+      <br /><span class="title3">FAKTA-ARK</span>
+    </p>
+  </div>
+  <div class="intro">
+    <p class="title1">
+      Fra Oscar Laursen<br />Til Læser<br /><br />Dokument nummer: 0001
+    </p>
+    <p class="title2">
+      &nbsp;&nbsp;&nbsp;&nbsp;På dette ark finder du relevante oplysninger
+      vedrørende Oscar Damsgaard Laursen
+    </p>
+    <p class="intro_title">OSCAR</p>
+    <p class="title3">
+      <br />
+      Alder: 24 år <br />Stjernetegn: Vægten<br /> Øjenfarve: Blå <br
+      />Hårfarve: Blond <br />Hjemby: Horsens, nuværende København
+    </p>
+  </div>
+  <div class="outro">
+    <p class="title1">
+      <b>UDSENDT</b>
+      <br />
+      Uddannet ved udgang af
+    </p>
+    <div class="grid_1-1">
+      <div class="title2">
+        <p>
+          Københavns <br />Erhvervsakademi
+        </p>
+        <div class="horizontal_line"></div>
+        <p class="small_title">Uddannelsessted</p>
+      </div>
+      <div class="title3">
+        <p>2026</p>
+        <div class="horizontal_line"></div>
+        <p class="small_title">Årgang</p>
+      </div>
+    </div>
+  </div>
+  <img src="assets/ek_logo_paper.svg" alt="Pink blanket" class="logo" />
+</article>
 
 <style>
   .paper {
@@ -69,12 +123,12 @@ const { top, right, z1, z2, deg } = Astro.props;
     background-size: contain;
     aspect-ratio: 1/1.314;
     box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
-    transition: 0.3s;
+    transition: transform 0.3s;
   }
 
   .paper:hover {
-    scale: 1.02;
-    transition: 0.3s;
+    transform: scale(1.02);
+    transition: transform 0.3s;
   }
 
   .flex-span {
@@ -192,5 +246,70 @@ const { top, right, z1, z2, deg } = Astro.props;
     bottom: 5%;
     right: 5%;
     mix-blend-mode: darken;
+  }
+
+  .paper2 {
+    display: none;
+    width: 70vw; /* bredde følger viewport */
+    height: auto;
+    background-image: url(assets/pink-blanket.png);
+    background-size: contain;
+    aspect-ratio: 1/1.314;
+    position: relative;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
+  }
+
+  .paper2 .document_head {
+    font-size: calc(1.5cqw * var(--font-scale)); /* 0.5 + 2 */
+  }
+  .paper2 .document_title {
+    font-size: calc(1.8cqw * var(--font-scale)); /* 0.8 + 2 */
+  }
+  .paper2 .document_title .title2 {
+    font-size: calc(1.6cqw * var(--font-scale)); /* 0.6 + 2 */
+  }
+  .paper2 .document_title .title3 {
+    font-size: calc(2.8cqw * var(--font-scale)); /* 1.2 + 2 */
+  }
+  .paper2 .intro {
+    font-size: calc(1.7cqw * var(--font-scale)); /* 0.7 + 2 */
+  }
+  .paper2 .outro {
+    font-size: calc(1.7cqw * var(--font-scale)); /* 0.7 + 2 */
+  }
+  .paper2 .small_title {
+    font-size: calc(1.4cqw * var(--font-scale)); /* 0.4 + 2 */
+  }
+  .paper2 .logo {
+    position: absolute;
+    width: 30%;
+    bottom: 5%;
+    right: 5%;
+    mix-blend-mode: darken;
+  }
+
+  @media (max-width: 800px) {
+    .paper {
+      display: none;
+    }
+    .paper2 {
+      display: block;
+    }
+    .overlay {
+      display: none;
+    }
+    .document_title {
+      position: absolute;
+      text-align: center;
+      color: #ce0000;
+      font-family: owners-xwide, sans-serif;
+      font-weight: 400;
+      font-style: normal;
+      top: 70%;
+      left: 50%;
+    }
+    .flex-span {
+      position: relative;
+    }
   }
 </style>
