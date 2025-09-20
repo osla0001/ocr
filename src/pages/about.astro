@@ -1,5 +1,202 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Blanket from "../components/Blanket.astro";
+import BlanketFront from "../components/BlanketFront.astro";
+import Polaroid from "../components/Polaroid.astro";
+import StickynoteLong from "../components/StickynoteLong.astro";
+import Guide from "../components/Guide.astro";
+import Help from "../components/Help.astro";
+import DragElement from "../components/DragElement.astro";
+import CD from "../components/CD.astro";
 ---
 
-<Layout title="OMMIG" meta="Lær mere om mig og mine projekter" />
+<Layout title="OMMIG" meta="Lær mere om mig og mine projekter">
+  <section class="screen">
+    <div class="content-container">
+      <img src="/assets/folder.png" alt="" class="folder" />
+      <CD
+        top="34%"
+        right="4%"
+        width="35%"
+        z="1"
+        img1="assets/CD_1.png"
+        img2="/assets/CD_2.png"
+      />
+      <Blanket
+        top="12%"
+        right="5%"
+        title="ERHVERVSERFARING"
+        fontcolor="#1900D5"
+        paper="/assets/green-blanket.png"
+        z1="1"
+        z2="2"
+        deg="3"
+      >
+        <p class="title1">
+          <span class="job_title">Servicemedarbejder u/18 - Bilka</span>
+          <br />
+          <span class="job_date">3. april 19 - 15. oktober 19</span><br />
+          Kasseekspedient, håndtering af varer og betjening af kunder<br /><br
+          />
+          <span class="job_title"
+            >Kaffevognsekspedient i kaffe/is-bod | Woodys</span
+          ><br />
+          <span class="job_date">Sommer 21 - Efterår 22</span><br />
+          <span class="job_description"
+            >Lave kaffe, servere is, rengøring og betjening af kunder</span
+          ><br /><br />
+          <span class="job_title">Timelønnet tilkaldevikar | Krokushaven</span
+          ><br />
+          <span class="job_date">24. januar 22 - 13. juni 22</span><br />
+
+          Pasning og underholdning af børn i alderen 1 - 6 år<br /><br />
+          <span class="job_title"
+            >Servicemedarbejder |Regionshospitalet Horsens</span
+          ><br /><span class="job_date"> 13. juni 22 - 31. december 22</span><br
+          />og 1. januar 24 - 31. marts 24<br />Rengøring af sengestuer og
+          servering/tilberedning af mad<br /><br /><span class="job_title"
+            >Visuel Merchandiser | Normal</span
+          ><br /><span class="job_date">1. februar 23 - 30. juni 23</span><br
+          />Varemodtagelse, opsætning af salgsvarer på reoler og inventar samt
+          træning af butiksmedarbejdere i koncept og varehåndtering <br /><br />
+          <span class="job_title">Konceptudvikler | Arzu Magazine</span><br />
+          <span class="job_date">2024 - nu</span><br />Kreativ håndtering af
+          indhold og videreudvikling af grafik og koncept
+        </p></Blanket
+      >
+      <Blanket
+        top="10%"
+        right="14%"
+        title="KOMPETENCER"
+        fontcolor="#FF9900"
+        paper="/assets/blue-blanket.png"
+        z1="1"
+        z2="2"
+        deg="-3"
+      >
+        <p class="title1">
+          <span class="job_title">Grafisk kommunikation</span>
+          <br />
+          1) Grafisk design Konceptudvikling og idéudvikling <br />
+          2) Fotografi og billedbehandling <br />
+          3) Magasin- og editorial design <br />
+          4) Kreativ storytelling og videoproduktion <br /><br />
+          <span class="job_title">Kode og webudvikling</span>
+          <br />
+          1) HTML5 & CSS3 (inkl. CSS Grid & Flexbox) <br />
+          2) Separat CSS-arkitektur (struktur og genbrug af styles) <br />
+          3) Basis JavaScript (interaktivitet, filtrering af data) <br />
+          4) Frameworks: Astro (frontend-migrering) <br />
+          5) Databaseforbindelser (Supabase: filtrering, datahåndtering)<br
+          /><br />
+          <span class="job_title">Programmer og værktøjer</span>
+          <br />
+          1) Adobe Creative Cloud <br />
+          &nbsp;&nbsp;&nbsp;a. Photoshop (billedredigering, grafik) <br />
+          &nbsp;&nbsp;&nbsp;b. Illustrator (vektordesign, logoer) <br />
+          &nbsp;&nbsp;&nbsp;c. InDesign (magasin- og layoutdesign) <br />
+          &nbsp;&nbsp;&nbsp;d. Premiere Pro (videoredigering) <br />
+          2) Figma (UI/UX design, prototyper, mockups) <br />
+          3) Canva <br />
+          4) Final Cut Pro <br />
+          5) Blender (3d-modellering af grafik)
+        </p>
+      </Blanket>
+      <BlanketFront top="8%" right="8%" z1="3" z2="4" deg="1" />
+      <img src="assets/clip.png" alt="Clip" class="clip" />
+      <Polaroid />
+      <StickynoteLong />
+      <DragElement
+        top="-5%"
+        left="22%"
+        width="21%"
+        z="18"
+        img="assets/rosary.png"
+      />
+      <!-- <div class="sheet_container">
+        <img src="assets/sheet.png" alt="" />
+      </div>
+    </div> -->
+    </div>
+    <Help
+      >Find de interaktive elementer på siden <br />
+      ved at bevæge musen rundt på skærmen</Help
+    >
+  </section>
+
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Find alle blankets
+      const blankets = document.querySelectorAll(".blanket-root");
+      let topZ = 10; // Startværdi for øverste lag
+
+      blankets.forEach((blanket) => {
+        blanket.addEventListener("mousedown", () => {
+          topZ++;
+          blanket.style.zIndex = topZ;
+        });
+      });
+    });
+  </script>
+
+  <style>
+    .screen {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .content-container {
+      position: relative;
+      width: 63%;
+      margin-left: 4.5%;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .folder {
+      width: 100%;
+      height: auto;
+      position: relative;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .title1 {
+      margin-top: 13%;
+      color: black;
+    }
+
+    .job_title {
+      -webkit-text-stroke: 0.035rem;
+    }
+
+    .job_date {
+      font-size: calc(0.5cqw * var(--font-scale));
+      margin-bottom: 3%;
+    }
+
+    .clip {
+      position: absolute;
+      width: 8%;
+      height: auto;
+      top: -8%;
+      left: 6%;
+      z-index: 10;
+    }
+
+    .sheet_container {
+      position: absolute;
+      top: 8%;
+      left: 3%;
+      width: 33%;
+      height: auto;
+      pointer-events: none;
+    }
+  </style>
+</Layout>

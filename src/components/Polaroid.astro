@@ -1,0 +1,72 @@
+<div class="polaroid" id="polaroid">
+  <img src="assets/mini_me.jpeg" alt="Polaroid" />
+  <h1>ODL <br />2025</h1>
+</div>
+
+<style>
+  .polaroid {
+    top: 6%;
+    left: 3%;
+    position: absolute;
+    width: 17vw;
+    height: auto;
+    aspect-ratio: 1 / 1.15;
+    z-index: 5;
+    background-color: whitesmoke;
+    display: flex;
+    padding: 1.5%;
+    justify-content: center;
+    flex-direction: column;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
+    transition: box-shadow 0.3s;
+    transition: transform 0.3s;
+    pointer-events: auto;
+  }
+
+  .polaroid:hover {
+    transform: scale(1.02);
+    transition: transform 0.3s;
+  }
+
+  .falling {
+    animation: fallDown 1.2s cubic-bezier(0.5, 1.8, 0.5, 1) forwards;
+    box-shadow: 0 40px 40px 0px rgba(0, 0, 0, 0.24);
+  }
+
+  @keyframes fallDown {
+    0% {
+      top: 6%;
+      transform: rotate(0deg);
+    }
+    100% {
+      top: 120%;
+      transform: rotate(15deg);
+    }
+  }
+
+  img {
+    height: 85%;
+    width: 100%;
+    background-color: lightgray;
+    object-fit: contain;
+  }
+
+  h1 {
+    font-family: owners-xxwide, sans-serif;
+    font-weight: 400;
+    margin-top: 2%;
+    font-size: calc(1.5cqw * var(--font-scale));
+  }
+</style>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const polaroid = document.getElementById("polaroid");
+    polaroid.addEventListener("click", () => {
+      polaroid.classList.add("falling");
+    });
+    polaroid.addEventListener("animationend", () => {
+      polaroid.style.display = "none";
+    });
+  });
+</script>

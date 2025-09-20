@@ -1,0 +1,72 @@
+---
+const { top, left, width, z, img } = Astro.props;
+---
+
+<div
+  class="drag_container"
+  style=`position:absolute; top:${top}; left:${left}; width:${width}; height:auto; z-index:${z};`
+>
+  <img src={img} alt="Rosary" class="rosary" />
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector(".drag_container");
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+
+    container.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      container.classList.add("dragging");
+      startX = e.clientX;
+      startY = e.clientY;
+      // Hent nuværende left/top fra style (i px)
+      initialLeft = parseInt(container.style.left, 55) || container.offsetLeft;
+      initialTop = parseInt(container.style.top, 55) || container.offsetTop;
+      container.style.cursor = "grabbing";
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", onMouseUp);
+    });
+
+    function onMouseMove(e) {
+      if (!isDragging) return;
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+      container.style.left = `${initialLeft + deltaX}px`;
+      container.style.top = `${initialTop + deltaY}px`;
+    }
+
+    function onMouseUp() {
+      isDragging = false;
+      container.classList.remove("dragging");
+      container.style.cursor = "grab";
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    }
+
+    container.style.cursor = "grab";
+  });
+</script>
+
+<style>
+  .container {
+    /* styling og placering styres via inline-style */
+  }
+  .rosary {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(6px 5px 7px #00000074);
+    pointer-events: none; /* billedet kan ikke markeres eller drages direkte */
+    user-select: none;
+    display: block;
+  }
+  .drag_container {
+    transition: transform 0.2s;
+  }
+  .drag_container:hover {
+    transform: scale(1.02);
+  }
+  .drag_container.dragging {
+    user-select: none;
+  }
+</style>

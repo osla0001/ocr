@@ -1,0 +1,111 @@
+<div class="stickynote">
+  <img src="assets/paint_tape1.png" alt="" />
+  <h1>HVEM ER</h1>
+  <h2>Oscar D. Laursen</h2>
+  <p>
+    Oscar er en kreativ profil med et skarpt øje for æstetik og detaljer. Han
+    studerer multimediedesign på Københavns Erhvervsakademi og IADE Creative
+    University i Lissabon. Med en solid værktøjskasse, der spænder fra grafisk
+    design og fotografi til frontend-kodning, mestrer han at forvandle idéer til
+    visuelle oplevelser, der både fanger og engagerer. <br /><br /> Hans arbejde
+    er kendetegnet ved en kombination af professionel komposition og en særlig sans
+    for visuel identitet.
+  </p>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const note = document.querySelector(".stickynote");
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+
+    note.addEventListener("mousedown", (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      initialLeft = parseInt(note.style.left, 10) || note.offsetLeft;
+      initialTop = parseInt(note.style.top, 10) || note.offsetTop;
+      note.style.cursor = "grabbing";
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("mouseup", onMouseUp);
+    });
+
+    function onMouseMove(e) {
+      if (!isDragging) return;
+      const deltaX = e.clientX - startX;
+      const deltaY = e.clientY - startY;
+      note.style.left = `${initialLeft + deltaX}px`;
+      note.style.top = `${initialTop + deltaY}px`;
+    }
+
+    function onMouseUp() {
+      isDragging = false;
+      note.style.cursor = "grab";
+      document.removeEventListener("mousemove", onMouseMove);
+      document.removeEventListener("mouseup", onMouseUp);
+    }
+
+    note.style.cursor = "grab";
+  });
+</script>
+
+<style>
+  .stickynote {
+    top: 40%;
+    left: 15%;
+    position: absolute;
+    width: 16vw;
+    height: auto;
+    display: flex;
+    padding: 1.3%;
+    aspect-ratio: 71 / 99;
+    flex-direction: column;
+    background-image: url(assets/stickynote_lines.png);
+    background-size: contain;
+    z-index: 5;
+    transform: rotate(-2.3deg);
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
+    transition: box-shadow 0.2s;
+  }
+
+  .stickynote:active {
+    user-select: none;
+  }
+
+  img {
+    object-fit: contain;
+    position: absolute;
+    z-index: 5;
+    width: 10vw;
+    top: -10%;
+  }
+
+  h1 {
+    font-family: owners-xxwide, sans-serif;
+    font-weight: 200;
+    margin-top: 2%;
+    font-size: calc(1.5cqw * var(--font-scale));
+  }
+
+  h2 {
+    font-family: "Burgues Script";
+    font-weight: normal;
+    font-size: calc(1.5cqw * var(--font-scale));
+    transform: translate(15%, -30%);
+  }
+
+  p {
+    margin-top: 7%;
+    font-family: Inter, sans-serif;
+    font-size: calc(0.74cqw * var(--font-scale));
+    line-height: 1.37;
+  }
+
+  .stickynote {
+    transition: transform 0.2s;
+  }
+  .stickynote:hover {
+    transform: scale(1.02) rotate(-2.3deg);
+    transition: transform 0.2s;
+  }
+</style>

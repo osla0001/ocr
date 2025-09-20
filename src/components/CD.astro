@@ -1,0 +1,79 @@
+---
+const { top, right, width, z, img1, img2 } = Astro.props;
+---
+
+<div
+  class="container"
+  style={`position:absolute; top:${top}; left:${right}; width:${width}; height:auto; z-index:${z};`}
+>
+  <img src="/assets/cd_1.png" alt="CD" class="cd1" />
+  <img src="/assets/cd_2.png" alt="CD2" class="cd2" id="cd2" />
+  <audio id="cd-audio" src="/assets/365.mp3"></audio>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const cd2 = document.getElementById("cd2");
+    const audio = document.getElementById("cd-audio");
+    let spinning = false;
+
+    cd2.addEventListener("click", () => {
+      if (!spinning) {
+        audio.play();
+        cd2.classList.add("spinning");
+        cd2.style.animationPlayState = "running";
+        spinning = true;
+      } else {
+        audio.pause();
+        cd2.style.animationPlayState = "paused";
+        spinning = false;
+      }
+    });
+
+    audio.addEventListener("ended", () => {
+      cd2.style.animationPlayState = "paused";
+      spinning = false;
+    });
+  });
+</script>
+
+<style>
+  .container {
+    transition: transform 0.2s;
+  }
+
+  .container:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+  }
+
+  .cd1 {
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(6px 5px 7px #00000074);
+    pointer-events: none;
+    user-select: none;
+    display: block;
+  }
+
+  .cd2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: transform 0.2s;
+    transform-origin: 50% 55.2%;
+  }
+
+  .spinning {
+    animation: spin 2s linear infinite;
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

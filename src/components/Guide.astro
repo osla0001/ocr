@@ -1,0 +1,79 @@
+---
+const { text, top, right, margin } = Astro.props;
+---
+
+<div class="container" style=`top: ${top}; right: ${right};`>
+  <img src="assets/guide.svg" alt="Pil" class="arrow" />
+  <p style=`margin: ${margin};`>
+    {text}
+  </p>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const container = document.querySelector(".container");
+    const key = "guideHiddenUntil";
+    const now = Date.now();
+    const hiddenUntil = localStorage.getItem(key);
+
+    // Hvis der er sat en tid og den er i fremtiden, skjul containeren
+    if (hiddenUntil && now < Number(hiddenUntil)) {
+      if (container) container.style.display = "none";
+    } else {
+      if (container) {
+        container.style.display = "";
+        container.addEventListener("click", () => {
+          container.style.display = "none";
+          // Gem tidspunkt 5 minutter frem
+          localStorage.setItem(key, String(Date.now() + 5 * 60 * 1000));
+        });
+      }
+    }
+  });
+</script>
+
+<style>
+  .container {
+    position: absolute;
+    animation: pulse 1.2s infinite;
+    width: 5%;
+  }
+
+  .container:hover {
+    cursor: pointer;
+  }
+
+  .arrow {
+    position: relative;
+    transform: scaleX(-100%);
+  }
+
+  p {
+    font-family: "vamones", sans-serif;
+    font-size: calc(0.9cqw * var(--font-scale));
+    font-weight: normal;
+    font-style: normal;
+    text-transform: lowercase;
+    line-height: 1;
+    letter-spacing: 0px;
+    white-space: pre-line;
+    text-align: center;
+  }
+
+  p::after {
+    content: "";
+    display: block;
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.08);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+</style>
