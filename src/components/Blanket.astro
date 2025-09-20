@@ -7,7 +7,7 @@ const { top, right, title, fontcolor, paper, z1, z2, deg } = Astro.props;
   style=`top: ${top}; right: ${right}; z-index: ${z1}; rotate: ${deg}deg; background-image: url(${paper});`
 >
   <img
-    src="assets/blanket.png"
+    src="/assets/blanket.png"
     alt="Pink blanket"
     class="overlay"
     style=`z-index: ${z2};`
@@ -28,7 +28,7 @@ const { top, right, title, fontcolor, paper, z1, z2, deg } = Astro.props;
 
 <article class="paper2 blanket-root" style=` background-image: url(${paper});`>
   <img
-    src="assets/blanket.png"
+    src="/assets/blanket.png"
     alt="Pink blanket"
     class="overlay"
     style=`z-index: ${z2};`
@@ -121,7 +121,7 @@ const { top, right, title, fontcolor, paper, z1, z2, deg } = Astro.props;
     display: none;
     width: 70vw; /* bredde følger viewport */
     height: auto;
-    background-image: url(assets/pink-blanket.png);
+    background-image: url(/assets/pink-blanket.png);
     background-size: contain;
     aspect-ratio: 1/1.314;
     position: relative;
