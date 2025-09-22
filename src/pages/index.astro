@@ -4,73 +4,209 @@ import Layout from "../layouts/Layout.astro";
 
 <Layout title="osçar's Portfolio" meta="Forsiden til min portfolio hjemmeside">
   <section class="screen">
-    <div class="content-container">
-      <img src="/assets/whiteboard.svg" alt="" class="whiteboard" />
-      <!-- <div class="video">
-        <video src="/assets/fur_background.mp4" autoplay loop muted></video>
-      </div> -->
-      <div class="text">
-        <h1>Portfolio</h1>
+    <div class="zoom">
+      <div class="content-container">
+        <img src="/assets/whiteboard_white.svg" alt="" class="whiteboard" />
+        <div class="text">
+          <h1>Portfolio</h1>
+        </div>
       </div>
     </div>
   </section>
+  <section
+    class="additional-content"
+    data-aos="fade-right"
+    data-aos-duration="2000"
+  >
+    <h2>VELKOMMEN TIL OSCAR'S INTERAKTIVE PORTFOLIO</h2>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum atque ullam
+      beatae quam aliquid blanditiis rerum vero omnis illum, magni magnam
+      debitis ratione ipsum. Alias veritatis a inventore ducimus repudiandae,
+      quibusdam tenetur perferendis ea quam exercitationem sequi eligendi quia
+      minus deleniti necessitatibus, repellat debitis nulla unde reprehenderit
+      doloribus possimus commodi voluptatum. Quis nam nobis dolores rem id
+      deleniti animi velit quae odit aut, eaque aspernatur quidem a nesciunt
+      voluptate eligendi, quisquam maxime? <br /><br />Tenetur maiores
+      praesentium consequatur nemo ab totam corporis accusamus libero!
+      Accusantium, similique nostrum numquam tenetur quibusdam eum doloribus
+      consequuntur mollitia culpa ea deleniti itaque aperiam adipisci fuga nulla
+      fugit vitae, quidem, quo nam. Libero harum dolor consequatur consequuntur
+      ullam blanditiis magni ab unde fuga maiores iure, quod, nesciunt
+      voluptatem iusto repudiandae amet commodi laborum eveniet, aspernatur nam
+      natus laudantium aliquam adipisci? Non enim facere sed eum facilis velit
+      quam perspiciatis illo qui reiciendis, expedita consequatur laborum
+      distinctio doloremque assumenda ducimus? Deleniti repudiandae blanditiis
+      quasi placeat quisquam explicabo veritatis ullam itaque velit vitae
+      dignissimos minus maxime nisi ut harum quam sed nulla id officia illo a,
+      nihil esse perferendis. <br /><br />Doloribus, deserunt! Iure alias quam
+      fugiat commodi numquam labore dolores nihil pariatur architecto dolorum
+      saepe temporibus nam ratione repellat omnis sint aspernatur quas, porro
+      reprehenderit veniam rerum laboriosam similique. Rerum pariatur temporibus
+      ratione facere suscipit quos fuga modi perferendis et vel. Voluptatum,
+      possimus pariatur! Cum tempora sunt provident eveniet nihil incidunt
+      maxime? Accusantium consequuntur dolorum quo nesciunt sequi at ipsa nisi
+      eum quis, ab minima illo error odit dolore vitae?
+    </p>
+    <div class="space"></div>
+  </section>
 </Layout>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const ZOOM_KEY = "zoomTimestamp";
+    const FIVE_MINUTES = 0 * 60 * 1000;
+    const now = Date.now();
+
+    let zoomed = false;
+    const zoomEl = document.querySelector(".zoom");
+    const screenEl = document.querySelector(".screen");
+    const additionalContent = document.querySelector(".additional-content");
+
+    zoomEl.style.transition = "all 1.5s";
+
+    // Tjek om zoom skal springes over
+    const lastZoom = localStorage.getItem(ZOOM_KEY);
+    if (lastZoom && now - Number(lastZoom) < FIVE_MINUTES) {
+      // Spring zoom-animationen over
+      zoomEl.classList.add("zoomed");
+      zoomed = true;
+      document.body.style.overflow = "visible";
+      document.documentElement.style.overflow = "visible";
+      screenEl.style.overflow = "visible";
+      document.querySelector(".whiteboard").style.display = "none";
+      additionalContent.style.opacity = "1";
+      additionalContent.style.pointerEvents = "auto";
+      additionalContent.style.visibility = "visible";
+      if (window.AOS) AOS.refresh();
+      return;
+    }
+
+    // Ellers kør zoom-animationen som normalt
+    window.scrollTo({ top: 0, behavior: "auto" });
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    window.addEventListener("wheel", (e) => {
+      if (e.deltaY > 0 && !zoomed) {
+        zoomEl.classList.add("zoomed");
+        zoomed = true;
+      }
+    });
+
+    zoomEl.addEventListener("transitionend", (event) => {
+      if (
+        zoomed &&
+        (event.propertyName === "width" ||
+          event.propertyName === "height" ||
+          event.propertyName === "transform")
+      ) {
+        document.body.style.overflow = "visible";
+        document.documentElement.style.overflow = "visible";
+        screenEl.style.overflow = "visible";
+        screenEl.style.overflowX = "hidden";
+        document.querySelector(".whiteboard").style.display = "none";
+        localStorage.setItem(ZOOM_KEY, Date.now()); // Gem timestamp
+        setTimeout(() => {
+          additionalContent.style.opacity = "1";
+          additionalContent.style.pointerEvents = "auto";
+          additionalContent.style.visibility = "visible";
+          if (window.AOS) AOS.refresh();
+        }, 700);
+      }
+    });
+  });
+</script>
 
 <style>
   .screen {
     position: relative;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
   }
 
   .content-container {
     position: relative;
-    width: 30%; /* Samme som whiteboard */
-    height: auto;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .whiteboard {
-    width: 100%; /* Fylder containeren */
-    height: auto;
-    position: relative;
-  }
-
-  .video {
     position: absolute;
-    top: 5%;
-    left: 5.5%;
-    width: 89.5%;
-    height: 49.5%;
-    overflow: hidden;
+    left: 50%;
+    top: 50%;
+    width: 110%;
+    height: auto;
+    transform: translate(-50%, -50%);
+    object-fit: contain;
+    z-index: 1;
+    margin-top: 26%;
+    user-select: none;
+    overflow-x: hidden;
   }
 
-  .video video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    mix-blend-mode: multiply;
+  .zoom {
+    position: absolute;
+    left: 50%;
+    top: 38%;
+    transform: translate(-50%, -50%);
+    width: 54vh; /* Fylder containeren */
+    height: 36vh;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .zoom.zoomed {
+    width: 100vw !important;
+    height: 100vh !important;
+    /* Behold centreringsmetoden */
+    left: 50% !important;
+    top: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    border-radius: 0 !important;
+    /* background-color: #d4d5ce; */
+    z-index: 100;
+  }
+
+  .zoom.zoomed .content-container {
+    transform: none; /* Fjern skalering */
+    transition: none;
+  }
+
+  .zoom.zoomed .text {
+    transform: translate(-50%, -50%) scale(2.2); /* Justér scale efter behov */
+    transition: transform 1.5s;
   }
 
   .text {
-    width: 100%;
-    height: 32.5%;
     position: absolute;
-    align-content: center;
-    text-align: center;
-    top: 13%;
-    left: 17%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
     font-family: "helveticaultra_compressed";
-    font-size: calc(5cqw * var(--font-scale));
+    font-size: 230%;
     color: rgb(0, 0, 0);
-    text-align: left;
-    line-height: 1; /* Kontrollerer afstanden mellem linjer */
+    text-align: center;
+    line-height: 1;
     text-transform: uppercase;
+    margin: 0;
+    padding: 0;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1.5s;
   }
 
   .text h1,
@@ -88,5 +224,29 @@ import Layout from "../layouts/Layout.astro";
   .text h2 {
     font-weight: lighter; /* Gør undertitlen lettere */
     font-size: 0.8em; /* Gør undertitlen mindre */
+  }
+
+  .additional-content {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.7s;
+    display: block; /* VIGTIGT: ikke 'none' */
+    visibility: hidden; /* valgfrit, men ikke nødvendigt for AOS */
+    /* Styling: */
+    max-width: 75ch;
+    margin: 50px auto 50px auto;
+    width: 100%;
+  }
+
+  .space {
+    height: 20vh;
+  }
+
+  h2 {
+    font-family: owners-xwide, sans-serif;
+    font-size: calc(1.5cqw * var(--font-scale));
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 20px;
   }
 </style>

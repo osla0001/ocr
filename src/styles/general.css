@@ -17,6 +17,7 @@ img {
 
 html {
   text-wrap: pretty;
+  scroll-behavior: smooth;
 }
 
 @font-face {

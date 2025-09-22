@@ -1,6 +1,7 @@
 ---
 import Menu from "../components/Menu.astro";
 import "../styles/general.css";
+import AOSInit from "../styles/AOSInit.jsx";
 const { title, meta } = Astro.props;
 ---
 
@@ -47,11 +48,16 @@ const { title, meta } = Astro.props;
       rel="stylesheet"
       type="text/css"
     />
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <title>OÇR - {title}</title>
   </head>
   <body>
     <Menu />
     <slot />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    {/** Placer React-island her: */}
+    <AOSInit client:load />
   </body>
 </html>
 
