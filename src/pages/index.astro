@@ -18,36 +18,9 @@ import Layout from "../layouts/Layout.astro";
     data-aos="fade-right"
     data-aos-duration="2000"
   >
-    <h2>VELKOMMEN TIL OSCAR'S INTERAKTIVE PORTFOLIO</h2>
-    <p>
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum atque ullam
-      beatae quam aliquid blanditiis rerum vero omnis illum, magni magnam
-      debitis ratione ipsum. Alias veritatis a inventore ducimus repudiandae,
-      quibusdam tenetur perferendis ea quam exercitationem sequi eligendi quia
-      minus deleniti necessitatibus, repellat debitis nulla unde reprehenderit
-      doloribus possimus commodi voluptatum. Quis nam nobis dolores rem id
-      deleniti animi velit quae odit aut, eaque aspernatur quidem a nesciunt
-      voluptate eligendi, quisquam maxime? <br /><br />Tenetur maiores
-      praesentium consequatur nemo ab totam corporis accusamus libero!
-      Accusantium, similique nostrum numquam tenetur quibusdam eum doloribus
-      consequuntur mollitia culpa ea deleniti itaque aperiam adipisci fuga nulla
-      fugit vitae, quidem, quo nam. Libero harum dolor consequatur consequuntur
-      ullam blanditiis magni ab unde fuga maiores iure, quod, nesciunt
-      voluptatem iusto repudiandae amet commodi laborum eveniet, aspernatur nam
-      natus laudantium aliquam adipisci? Non enim facere sed eum facilis velit
-      quam perspiciatis illo qui reiciendis, expedita consequatur laborum
-      distinctio doloremque assumenda ducimus? Deleniti repudiandae blanditiis
-      quasi placeat quisquam explicabo veritatis ullam itaque velit vitae
-      dignissimos minus maxime nisi ut harum quam sed nulla id officia illo a,
-      nihil esse perferendis. <br /><br />Doloribus, deserunt! Iure alias quam
-      fugiat commodi numquam labore dolores nihil pariatur architecto dolorum
-      saepe temporibus nam ratione repellat omnis sint aspernatur quas, porro
-      reprehenderit veniam rerum laboriosam similique. Rerum pariatur temporibus
-      ratione facere suscipit quos fuga modi perferendis et vel. Voluptatum,
-      possimus pariatur! Cum tempora sunt provident eveniet nihil incidunt
-      maxime? Accusantium consequuntur dolorum quo nesciunt sequi at ipsa nisi
-      eum quis, ab minima illo error odit dolore vitae?
-    </p>
+    <img src="/assets/construction.png" alt="" class="sign" />
+    <h2>Siden er under konstruktion</h2>
+    <div class="space"></div>
     <div class="space"></div>
   </section>
 </Layout>
@@ -55,7 +28,7 @@ import Layout from "../layouts/Layout.astro";
 <script is:inline>
   document.addEventListener("DOMContentLoaded", () => {
     const ZOOM_KEY = "zoomTimestamp";
-    const FIVE_MINUTES = 0 * 60 * 1000;
+    const FIVE_MINUTES = 5 * 60 * 1000;
     const now = Date.now();
 
     let zoomed = false;
@@ -74,10 +47,15 @@ import Layout from "../layouts/Layout.astro";
       document.body.style.overflow = "visible";
       document.documentElement.style.overflow = "visible";
       screenEl.style.overflow = "visible";
+      screenEl.style.overflowX = "hidden";
       document.querySelector(".whiteboard").style.display = "none";
       additionalContent.style.opacity = "1";
       additionalContent.style.pointerEvents = "auto";
       additionalContent.style.visibility = "visible";
+      // Fjern transition på .text, så den ikke animerer
+      document.querySelector(".text").style.transition = "none";
+      document.querySelector(".text").style.transform =
+        "translate(-50%, -50%) scale(2.2)";
       if (window.AOS) AOS.refresh();
       return;
     }
@@ -206,7 +184,6 @@ import Layout from "../layouts/Layout.astro";
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: transform 1.5s;
   }
 
   .text h1,
@@ -248,5 +225,13 @@ import Layout from "../layouts/Layout.astro";
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .sign {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 15vw;
+    height: auto;
   }
 </style>
