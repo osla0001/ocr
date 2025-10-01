@@ -1,18 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import Letter from "../components/Letter.astro";
+import Hero from "../components/Hero.astro";
+import Blur from "../components/Blur.astro";
+import IndexNote from "../components/IndexNote.astro";
 ---
 
 <Layout title="osçar's Portfolio" meta="Forsiden til min portfolio hjemmeside">
-  <section class="screen" id="hero_section">
-    <div class="zoom">
-      <div class="content-container">
-        <img src="/assets/whiteboard_white.svg" alt="" class="whiteboard" />
-        <div class="text">
-          <h1>Portfolio</h1>
-        </div>
-      </div>
-    </div>
-  </section>
+  <Hero />
   <section class="additional-content">
     <section id="presentation">
       <div class="presentation-inner">
@@ -30,266 +25,10 @@ import Layout from "../layouts/Layout.astro";
         <img src="/assets/paper_holes.png" alt="" class="background_image" />
       </div>
     </section>
-
-    <section id="letter_section">
-      <div class="letter_container">
-        <img
-          src="/assets/letter_background.png"
-          alt=""
-          class="letter_background"
-        />
-        <img src="/assets/business_card3.png" alt="" class="business_card" />
-        <img src="/assets/letter_overlay.png" alt="" class="letter_overlay" />
-        <img src="/assets/letter_top.png" alt="" class="letter_top" />
-        <img src="/assets/letter_closed_top.png" alt="" class="letter_closed" />
-      </div>
-    </section>
-    <section id="blur_section">
-      <img src="/assets/blank_receipt.png" alt="" class="white_paper" />
-      <div class="hover_text">
-        <p>
-          <span class="hovertext_6">Denne</span>
-          <span class="hovertext_7">side</span>
-          <span class="hovertext_8">er</span>
-          <span class="hovertext_9">ikke</span>
-          <span class="hovertext_10">blot</span>
-          <span class="hovertext_11">et</span>
-          <span class="hovertext_12">udstillingsvindue,</span>
-          <span class="hovertext_13">men</span>
-          <span class="hovertext_14">en</span>
-          <span class="hovertext_15">oplevelse.</span>
-          <span class="hovertext_16">Her</span>
-          <span class="hovertext_17">bliver</span>
-          <span class="hovertext_18">du</span>
-          <span class="hovertext_19">inviteret</span>
-          <span class="hovertext_20">til</span>
-          <span class="hovertext_21">at</span>
-          <span class="hovertext_22">udforske</span>
-          <span class="hovertext_23">mine</span>
-          <span class="hovertext_24">projekter</span>
-          <span class="hovertext_25">gennem</span>
-          <span class="hovertext_26">leg</span>
-          <span class="hovertext_27">og</span>
-          <span class="hovertext_28">nysgerrighed.</span>
-          <span class="hovertext_29">Før</span>
-          <span class="hovertext_30">musen</span>
-          <span class="hovertext_31">hen</span>
-          <span class="hovertext_32">over</span>
-          <span class="hovertext_33">elementerne,</span>
-          <span class="hovertext_34">klik</span>
-          <span class="hovertext_35">og</span>
-          <span class="hovertext_36">træk</span>
-          <span class="hovertext_37">–</span>
-          <span class="hovertext_38">og</span>
-          <span class="hovertext_39">se,</span>
-          <span class="hovertext_40">hvordan</span>
-          <span class="hovertext_41">designet</span>
-          <span class="hovertext_42">folder</span>
-          <span class="hovertext_43">sig</span>
-          <span class="hovertext_44">ud</span>
-          <span class="hovertext_45">foran</span>
-          <span class="hovertext_46">dig.</span>
-          <span class="hovertext_47">Mit</span>
-          <span class="hovertext_48">ønske</span>
-          <span class="hovertext_49">er</span>
-          <span class="hovertext_50">at</span>
-          <span class="hovertext_51">skabe</span>
-          <span class="hovertext_52">en</span>
-          <span class="hovertext_53">levende</span>
-          <span class="hovertext_54">præsentation,</span>
-          <span class="hovertext_55">hvor</span>
-          <span class="hovertext_56">æstetik</span>
-          <span class="hovertext_57">og</span>
-          <span class="hovertext_58">interaktion</span>
-          <span class="hovertext_59">smelter</span>
-          <span class="hovertext_60">sammen,</span>
-          <span class="hovertext_61">så</span>
-          <span class="hovertext_62">du</span>
-          <span class="hovertext_63">kan</span>
-          <span class="hovertext_64">mærke</span>
-          <span class="hovertext_65">essensen</span>
-          <span class="hovertext_66">af</span>
-          <span class="hovertext_67">mit</span>
-          <span class="hovertext_68">arbejde.</span>
-        </p>
-      </div>
-    </section>
+    <IndexNote />
+    <Blur />
+    <Letter />
   </section>
-
-  <!-- Zoom effect -->
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      const ZOOM_KEY = "zoomTimestamp";
-      const FIVE_MINUTES = 0 * 60 * 1000;
-      const now = Date.now();
-
-      let zoomed = false;
-      const zoomEl = document.querySelector(".zoom");
-      const screenEl = document.querySelector(".screen");
-      const additionalContent = document.querySelector(".additional-content");
-
-      zoomEl.style.transition = "all 1.5s";
-
-      // Tjek om zoom skal springes over
-      const lastZoom = localStorage.getItem(ZOOM_KEY);
-      if (lastZoom && now - Number(lastZoom) < FIVE_MINUTES) {
-        // Spring zoom-animationen over
-        zoomEl.classList.add("zoomed");
-        zoomed = true;
-        document.body.style.overflow = "visible";
-        document.documentElement.style.overflow = "visible";
-        screenEl.style.overflow = "visible";
-        screenEl.style.overflowX = "hidden";
-        document.querySelector(".whiteboard").style.display = "none";
-        additionalContent.style.opacity = "1";
-        additionalContent.style.pointerEvents = "auto";
-        additionalContent.style.visibility = "visible";
-        // Fjern transition på .text, så den ikke animerer
-        document.querySelector(".text").style.transition = "none";
-        document.querySelector(".text").style.transform =
-          "translate(-50%, -50%) scale(2.2)";
-        if (window.AOS) AOS.refresh();
-        return;
-      }
-
-      // Ellers kør zoom-animationen som normalt
-      window.scrollTo({ top: 0, behavior: "auto" });
-      document.body.style.overflow = "hidden";
-      document.documentElement.style.overflow = "hidden";
-
-      window.addEventListener("wheel", (e) => {
-        if (e.deltaY > 0 && !zoomed) {
-          zoomEl.classList.add("zoomed");
-          zoomed = true;
-        }
-      });
-
-      zoomEl.addEventListener("transitionend", (event) => {
-        if (
-          zoomed &&
-          (event.propertyName === "width" ||
-            event.propertyName === "height" ||
-            event.propertyName === "transform")
-        ) {
-          document.body.style.overflow = "visible";
-          document.documentElement.style.overflow = "visible";
-          screenEl.style.overflow = "visible";
-          screenEl.style.overflowX = "hidden";
-          document.querySelector(".whiteboard").style.display = "none";
-          localStorage.setItem(ZOOM_KEY, Date.now());
-          setTimeout(() => {
-            additionalContent.style.pointerEvents = "auto";
-            additionalContent.style.visibility = "visible";
-            if (window.AOS) AOS.refresh();
-          }, 0o0);
-        }
-      });
-    });
-  </script>
-
-  <!-- Blur text -->
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      const hoverText = document.querySelector(".hover_text");
-      if (!hoverText) return;
-      const spans = hoverText.querySelectorAll("span");
-
-      // Sæt default random blur på alle spans ved load
-      spans.forEach((s) => {
-        const blurValue = (Math.random() * 2.0 + 1.0).toFixed(2); // 1 til 3
-        if (blurValue > 1) {
-          s.style.filter = `blur(${blurValue}px) drop-shadow(0px 0px 5px #3887E2)`;
-        } else {
-          s.style.filter = `blur(${blurValue}px)`;
-        }
-      });
-
-      hoverText.addEventListener("mouseover", (e) => {
-        if (e.target.tagName === "SPAN") {
-          spans.forEach((s) => {
-            const blurValue = (Math.random() * 2.0 + 0).toFixed(2); // 0 til 3
-            if (blurValue > 1) {
-              s.style.filter = `blur(${blurValue}px) drop-shadow(0px 0px 5px #3887E2)`;
-            } else {
-              s.style.filter = `blur(${blurValue}px)`;
-            }
-          });
-        }
-      });
-
-      hoverText.addEventListener("mouseout", (e) => {
-        if (e.target.tagName === "SPAN") {
-          spans.forEach((s) => {
-            const blurValue = (Math.random() * 2.0 + 1.0).toFixed(2); // 1 til 3
-            if (blurValue > 0.5) {
-              s.style.filter = `blur(${blurValue}px) drop-shadow(0px 0px 10px #3887E2)`;
-            } else {
-              s.style.filter = `blur(${blurValue}px)`;
-            }
-          });
-        }
-      });
-    });
-  </script>
-
-  <!-- Brev -->
-  <script is:inline>
-    document.addEventListener("DOMContentLoaded", () => {
-      const closed = document.querySelector(".letter_closed");
-      const top = document.querySelector(".letter_top");
-      const businessCard = document.querySelector(".business_card");
-      const letterSection = document.querySelector("#letter_section");
-
-      if (!closed || !top || !businessCard || !letterSection) return;
-
-      let isOpen = false;
-
-      function openLetter() {
-        if (isOpen) return;
-        isOpen = true;
-        closed.style.display = "block";
-        closed.style.transition = "transform 0.5s, opacity 0.5s";
-        closed.style.transform = "rotateX(180deg)";
-        closed.style.opacity = "0.5";
-
-        setTimeout(() => {
-          top.style.display = "block";
-          top.style.transition = "transform 0.5s";
-          top.style.transform = "rotateX(0deg)";
-        }, 150);
-
-        setTimeout(() => {
-          closed.style.display = "none";
-          businessCard.style.transition = "top 0.5s, scale 0.5s";
-          businessCard.style.top = "-45%";
-          businessCard.style.scale = "1";
-        }, 500);
-      }
-
-      // Start med lukket brev
-      closed.style.display = "block";
-      top.style.display = "block";
-      top.style.transform = "rotateX(90deg)";
-      businessCard.style.top = "0%";
-      businessCard.style.scale = "0.9";
-
-      // Åbn brevet når letter_section bliver synlig (kun én gang)
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting && !isOpen) {
-              openLetter();
-            }
-          });
-        },
-        {
-          threshold: [0.1],
-        },
-      );
-
-      observer.observe(letterSection);
-    });
-  </script>
 
   <!-- Snap scroll -->
   <script is:inline>
@@ -297,6 +36,7 @@ import Layout from "../layouts/Layout.astro";
       const zoomEl = document.querySelector(".zoom");
       let snapScrollActive = false;
       let firstScroll = true;
+      let lastSnapTime = Date.now();
 
       function activateSnapScroll() {
         if (snapScrollActive) return;
@@ -308,11 +48,13 @@ import Layout from "../layouts/Layout.astro";
         window.addEventListener(
           "wheel",
           (e) => {
-            if (isSnapping) {
+            const now = Date.now();
+            if (isSnapping || now - lastSnapTime < 1500) {
               e.preventDefault();
               return;
             }
             isSnapping = true;
+            lastSnapTime = now;
 
             // Første scroll efter zoom: tving til #presentation
             if (firstScroll) {
@@ -378,6 +120,7 @@ import Layout from "../layouts/Layout.astro";
       });
     });
   </script>
+
   <style>
     html,
     body {
@@ -522,39 +265,6 @@ import Layout from "../layouts/Layout.astro";
       margin-bottom: 1px;
     }
 
-    /* Blur sektion */
-    #blur_section {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 10%;
-    }
-    .hover_text {
-      text-align: justify;
-      text-wrap: pretty;
-    }
-
-    .hover_text span {
-      display: inline-block;
-      transition: filter 0.3s;
-    }
-
-    .white_paper {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 115%;
-      height: auto;
-      z-index: -1;
-      user-select: none;
-      object-fit: fill;
-      filter: drop-shadow(4px 6px 10px rgba(0, 0, 0, 0.25));
-    }
-
     /* Præsentationssektion */
     #presentation {
       position: relative;
@@ -596,71 +306,6 @@ import Layout from "../layouts/Layout.astro";
 
     .presentation p {
       text-align: justify;
-    }
-
-    /* Brev sektion */
-    #letter_section {
-      position: relative;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      width: 100%;
-      padding-top: 15%;
-    }
-
-    .letter_container {
-      position: relative;
-      width: 25vw;
-      height: 20vw;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .letter_background,
-    .letter_overlay,
-    .letter_closed,
-    .letter_top,
-    .business_card {
-      position: absolute;
-      width: 100%;
-      height: auto;
-      left: 0;
-      top: 0;
-      display: block;
-      pointer-events: none;
-    }
-
-    .letter_top {
-      top: -52.5%;
-      display: none;
-      transform-origin: bottom center;
-      z-index: -1;
-    }
-    .letter_closed {
-      transform-origin: top center;
-      backface-visibility: hidden;
-    }
-
-    .letter_background {
-      filter: drop-shadow(4px 6px 6px rgba(0, 0, 0, 0.25));
-    }
-
-    .letter_overlay {
-      filter: drop-shadow(0px -1px 1px rgba(0, 0, 0, 0.1));
-    }
-
-    .business_card {
-      position: relative;
-      top: 0%;
-      scale: 0.9;
-      width: 80%; /* <-- Ændret fra 40% til 100% */
-      height: auto;
-      display: block;
-      box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.25);
-      place-self: center;
     }
   </style>
 </Layout>

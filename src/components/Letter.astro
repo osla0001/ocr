@@ -1,0 +1,163 @@
+---
+// Letter.astro
+---
+
+<section id="letter_section">
+  <div class="letter_container">
+    <img src="/assets/letter_background.png" alt="" class="letter_background" />
+    <img src="/assets/business_card3.png" alt="" class="business_card" />
+    <img src="/assets/letter_overlay.png" alt="" class="letter_overlay" />
+    <img src="/assets/letter_top.png" alt="" class="letter_top" />
+    <img src="/assets/letter_closed_top.png" alt="" class="letter_closed" />
+  </div>
+  <div
+    class="letter_content"
+    data-aos="zoom-in"
+    data-aos-offset="200"
+    data-aos-duration="1000"
+  >
+    <p>
+      KONTAKT MIG PÅ: <br /><a href="mailto:oscardlaursen@gmail.com"
+        >oscardlaursen@gmail.com</a
+      ><br /> +45 50868563
+    </p>
+  </div>
+</section>
+
+<!-- Brev -->
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const closed = document.querySelector(".letter_closed");
+    const top = document.querySelector(".letter_top");
+    const businessCard = document.querySelector(".business_card");
+    const letterSection = document.querySelector("#letter_section");
+
+    if (!closed || !top || !businessCard || !letterSection) return;
+
+    let isOpen = false;
+
+    function openLetter() {
+      if (isOpen) return;
+      isOpen = true;
+      closed.style.display = "block";
+      closed.style.transition = "transform 0.5s, opacity 0.5s";
+      closed.style.transform = "rotateX(180deg)";
+      closed.style.opacity = "0.5";
+
+      setTimeout(() => {
+        top.style.display = "block";
+        top.style.transition = "transform 0.5s";
+        top.style.transform = "rotateX(0deg)";
+      }, 150);
+
+      setTimeout(() => {
+        closed.style.display = "none";
+        businessCard.style.transition = "top 0.5s, scale 0.5s";
+        businessCard.style.top = "-45%";
+        businessCard.style.scale = "1";
+      }, 500);
+    }
+
+    // Start med lukket brev
+    closed.style.display = "block";
+    top.style.display = "block";
+    top.style.transform = "rotateX(90deg)";
+    businessCard.style.top = "0%";
+    businessCard.style.scale = "0.9";
+
+    // Åbn brevet når letter_section er mindst 20% synlig
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (
+            entry.isIntersecting &&
+            entry.intersectionRatio >= 0.2 &&
+            !isOpen
+          ) {
+            openLetter();
+          }
+        });
+      },
+      {
+        threshold: [0.2], // 20% af sektionen skal være synlig
+      },
+    );
+
+    observer.observe(letterSection);
+  });
+</script>
+
+<style>
+  #letter_section {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    padding-top: 15%;
+    flex-direction: column;
+  }
+
+  .letter_content {
+    margin-top: 20px;
+    text-align: center;
+    font-family: owners-wide, sans-serif;
+    font-size: calc(1.15cqw * var(--font-scale));
+    line-height: 1.4;
+  }
+
+  .letter_container {
+    position: relative;
+    width: 25vw;
+    height: 20vw;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .letter_background,
+  .letter_overlay,
+  .letter_closed,
+  .letter_top,
+  .business_card {
+    position: absolute;
+    width: 100%;
+    height: auto;
+    left: 0;
+    top: 0;
+    display: block;
+    pointer-events: none;
+  }
+
+  .letter_top {
+    top: -52.5%;
+    display: none;
+    transform-origin: bottom center;
+    z-index: -1;
+  }
+  .letter_closed {
+    transform-origin: top center;
+    backface-visibility: hidden;
+  }
+
+  .letter_background {
+    filter: drop-shadow(4px 6px 6px rgba(0, 0, 0, 0.25));
+  }
+
+  .letter_overlay {
+    filter: drop-shadow(0px -1px 1px rgba(0, 0, 0, 0.1));
+  }
+
+  .business_card {
+    position: relative;
+    top: 0%;
+    scale: 0.9;
+    width: 80%;
+    height: auto;
+    display: block;
+    box-shadow: 4px 6px 6px rgba(0, 0, 0, 0.25);
+    place-self: center;
+  }
+</style>
