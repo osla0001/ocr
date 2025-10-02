@@ -67,6 +67,17 @@
       <span class="hovertext_68">arbejde.</span>
     </p>
   </div>
+  <div class="mobile">
+    <p>
+      Denne side er ikke blot et udstillingsvindue, men en oplevelse. Her
+      inviteres du til at udforske mine projekter gennem leg og nysgerrighed –
+      men oplevelsen er skabt til computer, hvor funktioner som klik, træk og
+      interaktion folder designet ud foran dig. Mit ønske er at skabe en levende
+      præsentation, hvor æstetik og interaktion smelter sammen, så du kan mærke
+      essensen af mit arbejde. Portfolien kan stadig beundres på mobile enheder,
+      men for fulde effekt anbefales computer.
+    </p>
+  </div>
 </section>
 
 <!-- Blur text -->
@@ -128,6 +139,8 @@
   .hover_text {
     text-align: justify;
     text-wrap: pretty;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 100%;
   }
 
   .hover_text span {
@@ -147,5 +160,31 @@
     object-fit: fill;
     filter: drop-shadow(4px 6px 10px rgba(0, 0, 0, 0.25));
     opacity: 0.5;
+  }
+
+  .mobile {
+    display: none;
+    text-align: justify;
+    text-wrap: pretty;
+    max-width: 60%;
+  }
+
+  .mobile p {
+    font-size: 90%;
+    place-self: center;
+  }
+
+  @media screen and (max-width: 800px) {
+    .mobile {
+      display: block;
+    }
+    .hover_text {
+      display: none;
+    }
+
+    .white_paper {
+      transform: translate(-50%, -50%) scaleX(0.6);
+      width: 130%;
+    }
   }
 </style>

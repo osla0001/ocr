@@ -45,6 +45,7 @@ import IndexNote from "../components/IndexNote.astro";
         const sections = Array.from(document.querySelectorAll("section[id]"));
         let isSnapping = false;
 
+        // Desktop: Wheel events
         window.addEventListener(
           "wheel",
           (e) => {
@@ -53,59 +54,95 @@ import IndexNote from "../components/IndexNote.astro";
               e.preventDefault();
               return;
             }
-            isSnapping = true;
-            lastSnapTime = now;
-
-            // Første scroll efter zoom: tving til #presentation
-            if (firstScroll) {
-              firstScroll = false;
-              const presentationSection =
-                document.getElementById("presentation");
-              if (presentationSection) {
-                presentationSection.scrollIntoView({
-                  behavior: "smooth",
-                  block: "start",
-                });
-              }
-              setTimeout(() => {
-                isSnapping = false;
-              }, 900);
-              e.preventDefault();
-              return;
-            }
-
-            // Basic snap scroll: én sektion ad gangen
-            let closestIdx = 0;
-            let minDist = Math.abs(sections[0].getBoundingClientRect().top);
-
-            sections.forEach((section, idx) => {
-              const dist = Math.abs(section.getBoundingClientRect().top);
-              if (dist < minDist) {
-                minDist = dist;
-                closestIdx = idx;
-              }
-            });
-
-            let nextIdx = closestIdx;
-            if (e.deltaY > 0 && closestIdx < sections.length - 1) {
-              nextIdx = closestIdx + 1;
-            } else if (e.deltaY < 0 && closestIdx > 0) {
-              nextIdx = closestIdx - 1;
-            }
-
-            sections[nextIdx].scrollIntoView({
-              behavior: "smooth",
-              block: "start",
-            });
-
-            setTimeout(() => {
-              isSnapping = false;
-            }, 900);
-
+            handleScroll(e.deltaY > 0 ? "down" : "up", now);
             e.preventDefault();
           },
           { passive: false },
         );
+
+        // Mobile: Touch events
+        let startY = null;
+        let startTime = null;
+
+        window.addEventListener("touchstart", (e) => {
+          startY = e.touches[0].clientY;
+          startTime = Date.now();
+        });
+
+        window.addEventListener(
+          "touchend",
+          (e) => {
+            if (!startY || !startTime) return;
+
+            const endY = e.changedTouches[0].clientY;
+            const endTime = Date.now();
+            const deltaY = startY - endY;
+            const deltaTime = endTime - startTime;
+
+            // Kun hvis swipe er lang nok og hurtig nok
+            if (Math.abs(deltaY) > 50 && deltaTime < 300) {
+              const now = Date.now();
+              if (isSnapping || now - lastSnapTime < 1500) {
+                e.preventDefault();
+                return;
+              }
+              handleScroll(deltaY > 0 ? "down" : "up", now);
+            }
+
+            startY = null;
+            startTime = null;
+          },
+          { passive: false },
+        );
+
+        function handleScroll(direction, now) {
+          isSnapping = true;
+          lastSnapTime = now;
+
+          // Første scroll efter zoom: tving til #presentation
+          if (firstScroll) {
+            firstScroll = false;
+            const presentationSection = document.getElementById("presentation");
+            if (presentationSection) {
+              presentationSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+            setTimeout(() => {
+              isSnapping = false;
+            }, 900);
+            return;
+          }
+
+          // Basic snap scroll: én sektion ad gangen
+          let closestIdx = 0;
+          let minDist = Math.abs(sections[0].getBoundingClientRect().top);
+
+          sections.forEach((section, idx) => {
+            const dist = Math.abs(section.getBoundingClientRect().top);
+            if (dist < minDist) {
+              minDist = dist;
+              closestIdx = idx;
+            }
+          });
+
+          let nextIdx = closestIdx;
+          if (direction === "down" && closestIdx < sections.length - 1) {
+            nextIdx = closestIdx + 1;
+          } else if (direction === "up" && closestIdx > 0) {
+            nextIdx = closestIdx - 1;
+          }
+
+          sections[nextIdx].scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+
+          setTimeout(() => {
+            isSnapping = false;
+          }, 900);
+        }
       }
 
       // Aktiver snap scroll når zoom-animationen er færdig
@@ -139,118 +176,12 @@ import IndexNote from "../components/IndexNote.astro";
       height: 100vh;
     }
 
-    /* Hero sektion */
-    .screen {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      overflow: hidden;
-    }
-
-    .content-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .whiteboard {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 110%;
-      height: auto;
-      transform: translate(-50%, -50%);
-      object-fit: contain;
-      z-index: 1;
-      margin-top: 26%;
-      user-select: none;
-      overflow-x: hidden;
-    }
-
-    .zoom {
-      position: absolute;
-      left: 50%;
-      top: 38%;
-      transform: translate(-50%, -50%);
-      width: 54vh; /* Fylder containeren */
-      height: 36vh;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .zoom.zoomed {
-      width: 100vw !important;
-      height: 100vh !important;
-      left: 50% !important;
-      top: 50% !important;
-      transform: translate(-50%, -50%) !important;
-      border-radius: 0 !important;
-      z-index: 100;
-    }
-
-    .zoom.zoomed .content-container {
-      transform: none;
-      transition: none;
-    }
-
-    .zoom.zoomed .text {
-      transform: translate(-50%, -50%) scale(2.2);
-      transition: transform 1.5s;
-    }
-
-    .text {
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 100%;
-      font-family: "helveticaultra_compressed";
-      font-size: 230%;
-      color: rgb(0, 0, 0);
-      text-align: center;
-      line-height: 1;
-      text-transform: uppercase;
-      margin: 0;
-      padding: 0;
-      z-index: 2;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .text h1,
-    .text h2 {
-      margin: 0;
-      padding: 0;
-      font-weight: normal; /* Eller den vægt du ønsker */
-    }
-
-    .text h1 {
-      margin-bottom: 0; /* Kun en smule afstand mellem h1 og h2 */
-    }
-
-    .text h2 {
-      font-weight: lighter; /* Gør undertitlen lettere */
-      font-size: 0.8em; /* Gør undertitlen mindre */
-    }
-
-    /* Efter zoom-effekt */
     .additional-content {
       opacity: 1;
       pointer-events: none;
       transition: opacity 0.1s;
-      display: block; /* VIGTIGT: ikke 'none' */
-      visibility: hidden; /* valgfrit, men ikke nødvendigt for AOS */
-      /* Styling: */
+      display: block;
+      visibility: hidden;
       max-width: 70ch;
       margin: 50px auto 50px auto;
       width: 100%;
@@ -258,14 +189,13 @@ import IndexNote from "../components/IndexNote.astro";
 
     h2 {
       font-family: roundhand-regular, sans-serif;
-      font-size: calc(3.5cqw * var(--font-scale));
+      font-size: 300%;
       font-weight: 300;
       margin-bottom: 20px;
       text-align: center;
       margin-bottom: 1px;
     }
 
-    /* Præsentationssektion */
     #presentation {
       position: relative;
       width: 100%;
@@ -300,12 +230,47 @@ import IndexNote from "../components/IndexNote.astro";
     .small_logo {
       display: block;
       margin: 0 auto;
-      width: 6vw;
+      width: 15%;
       height: auto;
     }
 
-    .presentation p {
+    #presentation p {
       text-align: justify;
+      font-family: "Times New Roman", Times, serif;
+      font-size: 100%;
+    }
+
+    @media (max-width: 768px) {
+      #presentation {
+        padding: 20px;
+        height: auto;
+        min-height: 100vh;
+      }
+
+      .background_image {
+        width: 105%;
+      }
+
+      .presentation-inner {
+        max-width: 90%;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .small_logo {
+        width: 12%; /* Større logo på mobil */
+        margin-bottom: 0px;
+        display: none;
+      }
+
+      h2 {
+        font-size: 160%; /* Større tekst på mobil */
+      }
+
+      #presentation p {
+        font-size: 75%; /* Større tekst på mobil */
+        line-height: 1.6;
+      }
     }
   </style>
 </Layout>
