@@ -1,0 +1,66 @@
+---
+const { title, year, text, top, right } = Astro.props;
+---
+
+<div class="table-container" style=`top:${top};`>
+  <div class="table-title">
+    <h3>{title}<br /><i>{year}</i></h3>
+  </div>
+  <p>{text}</p>
+</div>
+
+<style>
+  .table-container {
+    position: absolute;
+    border: 1px black solid;
+    height: max-content;
+    margin: 0px 7%;
+    display: flex;
+    flex-direction: row;
+  }
+
+  .table-title {
+    border-right: 1px black solid;
+    padding: 2%;
+    min-width: 8vw;
+  }
+
+  h3 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 0.75vw;
+  }
+
+  p {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 0.75vw;
+    padding: 2%;
+  }
+
+  @media (max-width: 800px) {
+    .table-container {
+      position: absolute;
+      border: 1px black solid;
+      height: max-content;
+      margin: 0px 7%;
+      display: flex;
+      flex-direction: row; /* Samme som desktop */
+    }
+
+    .table-title {
+      border-right: 1px black solid;
+      padding: 2%;
+      min-width: 16vw;
+    }
+
+    h3 {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.8vw; /* Skaleret op fra 0.75vw */
+    }
+
+    p {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 1.8vw; /* Skaleret op fra 0.75vw */
+      padding: 2%;
+    }
+  }
+</style>

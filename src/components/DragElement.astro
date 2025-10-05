@@ -1,12 +1,14 @@
 ---
-const { top, left, width, z, img } = Astro.props;
+const { top, left, width, z, img, rotate, id } = Astro.props;
 ---
 
 <div
   class="drag_container"
-  style=`position:absolute; top:${top}; left:${left}; width:${width}; height:auto; z-index:${z};`
+  id={id}
+  style=`position:absolute; top:${top}; left:${left}; width:${width}; height:auto; z-index:${z}; rotate: ${rotate};`
 >
-  <img src={img} alt="Rosary" class="rosary" />
+  <img src={img} alt="Draggable element" class="rosary" />
+  <slot />
 </div>
 
 <script is:inline>
@@ -49,7 +51,7 @@ const { top, left, width, z, img } = Astro.props;
 </script>
 
 <style>
-  .container {
+  .drag_container {
     /* styling og placering styres via inline-style */
   }
   .rosary {
