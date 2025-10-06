@@ -13,40 +13,107 @@ const { top, left, width, z, img, rotate, id } = Astro.props;
 
 <script is:inline>
   document.addEventListener("DOMContentLoaded", () => {
-    const container = document.querySelector(".drag_container");
-    let isDragging = false;
-    let startX, startY, initialLeft, initialTop;
+    // Find alle drag_container elementer
+    const dragContainers = document.querySelectorAll(".drag_container");
 
-    container.addEventListener("mousedown", (e) => {
-      isDragging = true;
-      container.classList.add("dragging");
-      startX = e.clientX;
-      startY = e.clientY;
-      // Hent nuværende left/top fra style (i px)
-      initialLeft = parseInt(container.style.left, 55) || container.offsetLeft;
-      initialTop = parseInt(container.style.top, 55) || container.offsetTop;
-      container.style.cursor = "grabbing";
-      document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("mouseup", onMouseUp);
-    });
+    dragContainers.forEach((container) => {
+      let isDragging = false;
+      let startX, startY, initialLeft, initialTop;
 
-    function onMouseMove(e) {
-      if (!isDragging) return;
-      const deltaX = e.clientX - startX;
-      const deltaY = e.clientY - startY;
-      container.style.left = `${initialLeft + deltaX}px`;
-      container.style.top = `${initialTop + deltaY}px`;
-    }
+      container.addEventListener("mousedown", (e) => {
+        isDragging = true;
+        container.classList.add("dragging");
+        startX = e.clientX;
+        startY = e.clientY;
 
-    function onMouseUp() {
-      isDragging = false;
-      container.classList.remove("dragging");
+        // Hent nuværende left/top fra style (i px)
+        const leftValue = container.style.left;
+        const topValue = container.style.top;
+
+        // Parse både px og % værdier
+        if (leftValue.includes("%")) {
+          initialLeft =
+            (parseFloat(leftValue) / 100) * container.parentElement.offsetWidth;
+        } else {
+          initialLeft = parseInt(leftValue, 10) || container.offsetLeft;
+        }
+
+        if (topValue.includes("%")) {
+          initialTop =
+            (parseFloat(topValue) / 100) * container.parentElement.offsetHeight;
+        } else {
+          initialTop = parseInt(topValue, 10) || container.offsetTop;
+        }
+
+        container.style.cursor = "grabbing";
+
+        // Brug arrow functions til at bevare context
+        const onMouseMove = (e) => {
+          if (!isDragging) return;
+          const deltaX = e.clientX - startX;
+          const deltaY = e.clientY - startY;
+          container.style.left = `${initialLeft + deltaX}px`;
+          container.style.top = `${initialTop + deltaY}px`;
+        };
+
+        const onMouseUp = () => {
+          isDragging = false;
+          container.classList.remove("dragging");
+          container.style.cursor = "grab";
+          document.removeEventListener("mousemove", onMouseMove);
+          document.removeEventListener("mouseup", onMouseUp);
+        };
+
+        document.addEventListener("mousemove", onMouseMove);
+        document.addEventListener("mouseup", onMouseUp);
+      });
+
+      // Touch events for mobil (selvom de er skjult på mobil)
+      container.addEventListener("touchstart", (e) => {
+        isDragging = true;
+        container.classList.add("dragging");
+        const touch = e.touches[0];
+        startX = touch.clientX;
+        startY = touch.clientY;
+
+        const leftValue = container.style.left;
+        const topValue = container.style.top;
+
+        if (leftValue.includes("%")) {
+          initialLeft =
+            (parseFloat(leftValue) / 100) * container.parentElement.offsetWidth;
+        } else {
+          initialLeft = parseInt(leftValue, 10) || container.offsetLeft;
+        }
+
+        if (topValue.includes("%")) {
+          initialTop =
+            (parseFloat(topValue) / 100) * container.parentElement.offsetHeight;
+        } else {
+          initialTop = parseInt(topValue, 10) || container.offsetTop;
+        }
+
+        e.preventDefault();
+      });
+
+      container.addEventListener("touchmove", (e) => {
+        if (!isDragging) return;
+        const touch = e.touches[0];
+        const deltaX = touch.clientX - startX;
+        const deltaY = touch.clientY - startY;
+        container.style.left = `${initialLeft + deltaX}px`;
+        container.style.top = `${initialTop + deltaY}px`;
+        e.preventDefault();
+      });
+
+      container.addEventListener("touchend", () => {
+        isDragging = false;
+        container.classList.remove("dragging");
+      });
+
+      // Set initial cursor
       container.style.cursor = "grab";
-      document.removeEventListener("mousemove", onMouseMove);
-      document.removeEventListener("mouseup", onMouseUp);
-    }
-
-    container.style.cursor = "grab";
+    });
   });
 </script>
 
@@ -54,22 +121,27 @@ const { top, left, width, z, img, rotate, id } = Astro.props;
   .drag_container {
     /* styling og placering styres via inline-style */
   }
+
   .rosary {
     width: 100%;
     height: auto;
     filter: drop-shadow(6px 5px 7px #00000074);
-    pointer-events: none; /* billedet kan ikke markeres eller drages direkte */
+    pointer-events: none;
     user-select: none;
     display: block;
   }
+
   .drag_container {
     transition: transform 0.2s;
   }
+
   .drag_container:hover {
     transform: scale(1.02);
   }
+
   .drag_container.dragging {
     user-select: none;
+    transform: scale(1.02);
   }
 
   @media (max-width: 800px) {

@@ -3,27 +3,256 @@ import Layout from "../../layouts/Layout.astro";
 ---
 
 <Layout title="RESUME" meta="Mine faglige kompetencer">
-  <img src="/assets/construction.png" alt="" class="sign" />
-  <h2>Siden er under konstruktion</h2>
-  <div class="space"></div>
-  <div class="space"></div>
+  <div class="papers">
+    <div class="paper">
+      <img src="/assets/letter_background.png" alt="" class="image" />
+      <div class="text">
+        <h2>Grafisk kommunikation</h2>
+        <p>
+          <span>Grafisk design, konceptudvikling og idéudvikling</span><br />
+          Erfaring med at udvikle visuelle identiteter, udforme koncepter fra idé
+          til skitse og skabe designløsninger, der formidler et klart udtryk. <br
+          /><br /><span>Fotografi og billedbehandling</span> Rutineret i at tage
+          stemningsbilleder og portrætter samt redigere dem professionelt med fokus
+          på lys, farver og udtryk. <br /><br /><span
+            >Magasin- og editorial design</span
+          >
+          Arbejder med layout, typografi og visuel storytelling til både trykte og
+          digitale udgivelser, hvor æstetik og læsbarhed går hånd i hånd. <br
+          /><br /><span>Kreativ storytelling og videoproduktion</span> Udvikler idé,
+          manus og visuel stil til korte videoer samt redigering og klipning med
+          fokus på fortælling, stemning og formidling.
+        </p>
+      </div>
+      <div id="receipt"></div>
+      <img src="/assets/big_clip.png" alt="" class="clip" />
+    </div>
+    <div class="paper">
+      <div class="text">
+        <h2>Kode & webudvikling</h2>
+        <p>
+          <span>HTML & CSS</span>
+          <br />
+          Erfaring med at opbygge responsive layouts og komponenter ved hjælp af
+          moderne CSS-teknikker og semantisk HTML.
+          <br /><br />
+          <span>Separat CSS-arkitektur</span><br />
+          Strukturerer styles i selvstændige filer for bedre overblik, vedligeholdelse
+          og genbrug på tværs af projekter.
+          <br /><br />
+          <span>Basis JavaScript</span><br />
+          Bruger JavaScript til at skabe små funktioner, dynamik og simple datafiltreringer
+          på websider.
+          <br /><br />
+          <span>Frameworks: Astro</span><br />
+          Har arbejdet med at flytte projekter over i Astro og opsætte komponentbaseret
+          frontend-struktur.
+          <br /><br />
+
+          <span>SQL & Databaseforbindelser</span><br />
+          Forbinder frontend med database, henter og filtrerer data samt viser det
+          dynamisk i brugergrænsefladen.
+        </p>
+      </div>
+      <div class="text" style="margin-top: 0;">
+        <h2>Programmer & værktøjer</h2>
+        <p>
+          <span>Adobe Creative Cloud</span><br />
+          <ol>
+            <li>Photoshop – billedredigering, retouch og grafiske elementer</li>
+            <li>Illustrator – vektorgrafik, logoer og ikonografi</li>
+
+            <li>
+              InDesign – layout til magasiner, publikationer og editorial design
+            </li>
+            <li>
+              Premiere Pro – klipning, redigering og opsætning af videoindhold
+            </li>
+          </ol>
+          <br />
+          <br />
+          <span>Figma</span><br />
+          Designer brugervenlige interfaces, laver interaktive prototyper og arbejder
+          med designkomponenter. <br /><br />
+
+          <span>Final Cut Pro</span><br />
+          Videoredigering til kortformat, klip, lyd og storytelling. <br /><br
+          />
+
+          <span>Blender og Unity</span><br />
+          Udvikler simple 3D-elementer og modeller til visuelle projekter og grafik.
+        </p>
+      </div>
+    </div>
+  </div>
 </Layout>
 
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const receipt = document.getElementById("receipt");
+    receipt.addEventListener("click", () => {
+      receipt.classList.add("falling");
+    });
+    receipt.addEventListener("animationend", () => {
+      receipt.style.display = "none";
+    });
+  });
+</script>
+
 <style>
-  h2 {
-    font-family: owners-xwide, sans-serif;
-    font-size: calc(1.5cqw * var(--font-scale));
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 20px;
-    text-align: center;
+  .papers {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-items: center;
+    gap: 5vw;
+    grid-template-columns: auto auto;
   }
 
-  .sign {
-    display: block;
-    margin: 0 auto 20px auto;
-    width: 15vw;
+  .paper {
+    position: relative;
+    width: 27vw;
     height: auto;
-    margin-top: 15%;
+    aspect-ratio: 1/1.314;
+    box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
+    transition: transform 0.3s;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("/assets/tan_paper.png");
+    padding: 4%;
+  }
+
+  .text {
+    padding: 2%;
+    margin-top: 3%;
+  }
+
+  h2 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1cqw;
+    font-weight: 300;
+    text-align: left;
+    margin-bottom: 2%;
+  }
+
+  .text,
+  p {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.6cqw;
+    line-height: 1.2;
+    letter-spacing: 0px;
+  }
+
+  span {
+    text-decoration: underline;
+  }
+
+  ol {
+    list-style: decimal;
+    padding-left: 1.8em;
+    font-family: inherit;
+  }
+
+  li {
+    margin: 0;
+    padding: 0;
+    font-family: inherit;
+  }
+
+  ol,
+  li {
+    font-family: "Courier New", Courier, monospace;
+    font-size: 0.6cqw;
+    line-height: 1.2;
+  }
+
+  #receipt {
+    position: absolute;
+    width: 10vw;
+    height: auto;
+    aspect-ratio: 1/1.5; /* Tilføj aspect-ratio for at bevare proportioner */
+    top: 0.2%;
+    right: 5%;
+    z-index: 5;
+    transition: transform 0.3s;
+    background-image: url("/assets/wrinkle_receipt.png");
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    cursor: pointer; /* Tilføj cursor pointer for at indikere at det er klikbart */
+  }
+
+  @media (min-width: 800px) {
+    .falling {
+      animation: fallDown 1.2s cubic-bezier(0.5, 1.8, 0.5, 1) forwards;
+      box-shadow: 0 40px 40px 0px rgba(0, 0, 0, 0.24);
+    }
+
+    #receipt:hover {
+      transform: scale(1.02);
+      transition: transform 0.3s;
+    }
+  }
+
+  @keyframes fallDown {
+    0% {
+      top: 6%;
+      transform: rotate(0deg);
+    }
+    100% {
+      top: 120%;
+      transform: rotate(15deg);
+    }
+  }
+
+  .clip {
+    position: absolute;
+    width: 7vw;
+    height: auto;
+    top: -14%;
+    right: 11%;
+    z-index: 5;
+  }
+
+  @media (max-width: 800px) {
+    .papers {
+      grid-template-columns: auto;
+      gap: 10vw;
+      padding: 5vh 0;
+    }
+
+    .paper {
+      width: 80vw;
+      aspect-ratio: 1/1.314;
+      padding: 6%;
+    }
+
+    .text,
+    p {
+      font-size: 2.5vw;
+      line-height: 1.4;
+    }
+
+    h2 {
+      font-size: 3.5vw;
+      margin-bottom: 4%;
+    }
+
+    ol,
+    li {
+      font-size: 2.5vw;
+      line-height: 1.4;
+    }
+
+    #receipt {
+      display: none;
+    }
+
+    .clip {
+      display: none;
+    }
   }
 </style>

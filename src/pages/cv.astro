@@ -7,8 +7,8 @@ import Binder from "../components/Binder.astro";
   title="RESUME"
   meta="Mit CV, der opsummerer min uddannelse og erhvervserfaring"
 >
-  <h1>Resumé</h1>
   <div class="text">
+    <h1>Resumé</h1>
     <p>
       Søger De indsigt i min <a href="/cv/experience" class="highlight"
         >erhvervserfaring</a
@@ -77,12 +77,12 @@ import Binder from "../components/Binder.astro";
 
   h1 {
     position: absolute;
-    top: 50%;
-    left: 33.5%;
-    transform: translate(0%, -230%);
+    top: -25%;
+    left: 1%;
     font-size: calc(4cqw * var(--font-scale));
     font-family: roundhand, sans-serif;
     z-index: 1;
+    color: black;
   }
 
   .paper {
@@ -95,5 +95,28 @@ import Binder from "../components/Binder.astro";
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: -1;
+  }
+
+  @media (max-width: 800px) {
+    .text {
+      width: 65%;
+      font-size: calc(3cqw * var(--font-scale));
+      top: 55%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding-bottom: 0%;
+    }
+
+    h1 {
+      font-size: calc(7cqw * var(--font-scale));
+      top: -28%;
+    }
+
+    .paper {
+      width: 80vw;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 </style>
