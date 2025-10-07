@@ -21,21 +21,17 @@ html {
 }
 
 @font-face {
-  font-family: "RoundhandRegular";
+  font-family: "roundhand-regular";
   font-style: normal;
   font-weight: normal;
-  src:
-    local("Roundhand-Regular"),
-    url("/fonts/roundhand_regular.woff") format("woff");
+  src: url("/fonts/roundhand_regular.woff") format("woff");
 }
 
 @font-face {
-  font-family: "RoundhandBold";
+  font-family: "roundhand-bold";
   font-style: normal;
   font-weight: normal;
-  src:
-    local("Roundhand-Bold"),
-    url("/fonts/roundhand_old.woff") format("woff");
+  src: url("/fonts/roundhand_old.woff") format("woff");
 }
 
 @font-face {
