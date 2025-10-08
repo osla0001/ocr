@@ -55,6 +55,18 @@ const artworks = [
     tags: ["Serigrafi", "Analogt"],
     youtubeLink: "",
   },
+  {
+    id: 5,
+    billede: "/artworks/from_paris_to_berlin_1.webp",
+    billeder: ["/assets/artworks/detail6.webp"],
+    titel: "From Paris to Berlin",
+    årstal: 2023,
+    kunstnere: ["Oscar Laursen"],
+    beskrivelse:
+      "Et projekt, hvor håndlavede perlesmykker møder digital æstetik. Skabt som en del af et større eksperiment omkring smykkevisualisering på web.",
+    tags: ["Analogt"],
+    youtubeLink: "",
+  },
 ];
 
 export default artworks;

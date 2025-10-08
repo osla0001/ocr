@@ -6,24 +6,16 @@ import artworks from "../../database/artworks.jsx";
 
 <Layout title="RESUME" meta="Mine faglige kompetencer">
   <div class="title">
-    <svg viewBox="0 0 500 500" fill="none">
-      <path
-        id="curve"
-        d="M73.2,148.6c4-6.1,65.5-96.8,178.6-95.6c111.3,1.2,170.8,90.3,175.1,97"
-      ></path>
-      <text>
-        <textPath xlink:href="#curve" startOffset="50%"
-          >Øvrige Projekter</textPath
-        >
-      </text>
-    </svg>
+    <img src="/assets/title_projects.webp" alt="" />
     <h2>af Osçar Laursen</h2>
-    <h3>
-      Et galleri af værker skabt uden for skærmens kodesprog - i krydsfeltet
-      mellem det analoge og det digitale. En samling af fotografier, videoklip
-      og lydværker, side om side med grafiske kompositioner og malerier, hvor
-      håndens arbejde og det sanselige får lov at træde frem i dette galleri.
-    </h3>
+    <div class="content">
+      <h3>
+        Et galleri af værker skabt uden for skærmens kodesprog - i krydsfeltet
+        mellem det analoge og det digitale. En samling af fotografier, videoklip
+        og lydværker, side om side med grafiske kompositioner og malerier, hvor
+        håndens arbejde og det sanselige får lov at træde frem i dette galleri.
+      </h3>
+    </div>
   </div>
   <div class="space"></div>
   <div class="flex">
@@ -31,83 +23,45 @@ import artworks from "../../database/artworks.jsx";
   </div>
 </Layout>
 
-<!-- Script til at sikre top 0 left 0 position -->
-<script is:inline>
-  // Scroll til toppen umiddelbart når scriptet kører
-  window.scrollTo(0, 0);
-
-  document.addEventListener("DOMContentLoaded", () => {
-    // Scroll til toppen når DOM er loaded
-    window.scrollTo(0, 0);
-  });
-
-  // Scroll til toppen når siden vises (fx efter browser tilbage-knap)
-  window.addEventListener("pageshow", () => {
-    window.scrollTo(0, 0);
-  });
-
-  // Scroll til toppen når siden loader (backup)
-  window.addEventListener("load", () => {
-    window.scrollTo(0, 0);
-  });
-
-  // Forcér scroll til top hvis browser har "scroll restoration"
-  if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
-  }
-</script>
-
 <style>
   .title {
-    position: absolute;
-    top: 60%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    margin-top: 2%;
-  }
-
-  svg {
-    width: 900px;
-    height: 900px;
-    pointer-events: none;
-  }
-
-  text {
-    font-family: sans-serif;
-    font-size: 24px;
-    fill: black;
-    font-family: "big-caslon-fb", serif;
+    margin: 0 auto;
+    margin-top: 5%;
+    overflow-x: hidden;
+    place-content: center;
     text-align: center;
-    text-anchor: middle;
+  }
+
+  .title img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
   }
 
   h2 {
-    position: absolute;
-    top: 15%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-family: roundhand-bold, sans-serif;
     font-weight: 500;
     font-style: normal;
-    font-size: 14px;
+    font-size: 18px;
     text-align: center;
   }
 
+  .content {
+    max-width: 80%;
+    margin: 0 auto;
+    padding: 2cqw;
+    place-self: center;
+  }
+
   h3 {
-    position: absolute;
-    top: 22%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-family: "Times New Roman", Times, serif;
     font-weight: 500;
     font-style: normal;
     font-size: 14px;
     text-align: justify;
-    width: 50%;
-  }
-
-  .space {
-    height: 40vh;
+    max-width: 70ch;
   }
 
   .flex {
@@ -120,4 +74,14 @@ import artworks from "../../database/artworks.jsx";
     max-width: 90%;
     margin: 0 auto;
   }
+
+  body {
+    overflow-x: hidden;
+  }
 </style>
+
+<!-- Tilføj til <head> i Layout.astro -->
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+/>
