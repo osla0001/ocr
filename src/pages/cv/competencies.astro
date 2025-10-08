@@ -5,7 +5,7 @@ import Layout from "../../layouts/Layout.astro";
 <Layout title="RESUME" meta="Mine faglige kompetencer">
   <div class="papers">
     <div class="paper">
-      <img src="/assets/letter_background.png" alt="" class="image" />
+      <img src="/assets/letter_background.webp" alt="" class="image" />
       <div class="text">
         <h2>Grafisk kommunikation</h2>
         <p>
@@ -24,8 +24,21 @@ import Layout from "../../layouts/Layout.astro";
           fokus på fortælling, stemning og formidling.
         </p>
       </div>
-      <div id="receipt"></div>
-      <img src="/assets/big_clip.png" alt="" class="clip" />
+      <div id="receipt">
+        <div class="receipt_text">
+          <h3>☆</h3>
+          <h4>"Hello World"</h4>
+          <div class="dotted_line"></div>
+          <p>
+            Som en del af min uddannelse som multimediedesigner blev jeg
+            introduceret til kodning, og jeg opdagede hurtigt, at UI/UX-design
+            var noget, der virkelig fangede mig. Kombinationen af grafisk
+            design, brugeroplevelse og interaktivitet tiltaler mig, fordi den
+            forener det æstetiske med det funktionelle.
+          </p>
+        </div>
+      </div>
+      <img src="/assets/big_clip.webp" alt="" class="clip" />
     </div>
     <div class="paper">
       <div class="text">
@@ -121,7 +134,7 @@ import Layout from "../../layouts/Layout.astro";
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-image: url("/assets/tan_paper.png");
+    background-image: url("/assets/tan_paper.webp");
     padding: 4%;
   }
 
@@ -178,11 +191,40 @@ import Layout from "../../layouts/Layout.astro";
     right: 5%;
     z-index: 5;
     transition: transform 0.3s;
-    background-image: url("/assets/wrinkle_receipt.png");
+    background-image: url("/assets/wrinkle_receipt.webp");
     background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
     cursor: pointer; /* Tilføj cursor pointer for at indikere at det er klikbart */
+  }
+
+  .receipt_text {
+    font-family: "Courier New", Courier, monospace;
+    margin: 0 auto;
+    margin-top: 15%;
+    width: 80%;
+    place-self: center;
+  }
+
+  .receipt_text h4 {
+    font-size: 0.6cqw;
+    text-align: center;
+    margin-bottom: 10%;
+    font-weight: 400;
+  }
+
+  .receipt_text h3 {
+    font-size: 1cqw;
+    text-align: center;
+  }
+
+  .receipt_text p {
+    font-size: 0.5cqw;
+  }
+
+  .dotted_line {
+    border-bottom: 1px dotted black;
+    margin: 8% 0;
   }
 
   @media (min-width: 800px) {

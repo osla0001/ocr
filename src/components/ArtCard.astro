@@ -1,0 +1,202 @@
+---
+const { titel, tags, billede, id, årstal, number } = Astro.props; // Tilføj number prop
+
+// Tilføj type guards og sikkerhedstjek
+const tagArray: string[] =
+  typeof tags === "string" ? tags.split(", ") : Array.isArray(tags) ? tags : [];
+---
+
+<a href={`/project/${id}`} class="card">
+  <div class="lines">
+    <div class="right"></div>
+    <div class="left"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+    <div class="middle"></div>
+    <h1>{number}</h1>
+    <!-- Ændret fra {id} til {number} -->
+    <div class="content">
+      <h2>{titel}</h2>
+      <h4>{årstal}</h4>
+    </div>
+    <div class="tags">
+      {tagArray.map((tag: string) => <h3>{tag.trim()}</h3>)}
+    </div>
+
+    <div class="image">
+      <img src={billede} alt="" />
+    </div>
+  </div>
+</a>
+
+<style>
+  .card {
+    width: 230px;
+    height: auto;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    aspect-ratio: 1/1.314;
+    z-index: 2;
+    box-shadow: 4px 4px 5px 0px rgba(0, 0, 0, 0.24);
+    display: block; /* Tilføjet for at a-tag opfører sig som block */
+    text-decoration: none; /* Fjern underline */
+    color: inherit; /* Bevar tekstfarver */
+    transition: transform 0.3s; /* Tilføj hover-effekt */
+  }
+
+  .card:hover {
+    transform: scale(1.02); /* Hover-effekt */
+  }
+
+  .lines .right,
+  .lines .left,
+  .lines .top,
+  .lines .bottom,
+  .lines .middle {
+    background-color: #221c59;
+    opacity: 0.1;
+  }
+
+  .lines {
+    height: 100%;
+    width: 100%;
+    position: relative;
+  }
+
+  .lines .right {
+    position: absolute;
+    top: 0;
+    right: 5%;
+    width: 1px;
+    height: 100%;
+    z-index: 5;
+  }
+
+  .lines .left {
+    position: absolute;
+    top: 0;
+    left: 5%;
+    width: 1px;
+    height: 100%;
+    z-index: 5;
+  }
+
+  .lines .top {
+    position: absolute;
+    top: 5%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    z-index: 5;
+  }
+
+  .lines .bottom {
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    z-index: 5;
+  }
+
+  .lines .middle {
+    position: absolute;
+    top: 70%;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    z-index: 5;
+  }
+
+  h1 {
+    position: absolute;
+    top: 5%;
+    right: 7%;
+    font-family: owners-xxwide, sans-serif;
+    font-weight: 400;
+    -webkit-text-stroke: 1.5px rgb(57, 43, 29);
+    font-size: 25px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+    user-select: none;
+    letter-spacing: 3px;
+  }
+
+  .content {
+    position: absolute;
+    top: 70%;
+    left: 7%;
+    width: 86%;
+    height: 25%;
+    z-index: 10;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  h2 {
+    font-family: owners-xxwide, sans-serif;
+    font-weight: 400;
+    font-size: 15px;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+    user-select: none;
+    letter-spacing: 3px;
+  }
+
+  .tags {
+    position: absolute;
+    bottom: 35%;
+    right: 12%;
+    width: 80%;
+    height: fit-content;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 4px; /* Tilføj gap mellem tags */
+    flex-wrap: wrap; /* Tillad wrapping */
+  }
+
+  h3 {
+    font-family: owners-xxwide, sans-serif;
+    font-weight: 400;
+    font-size: 8px;
+    text-align: right;
+    color: #000000;
+    margin: 0;
+    padding: 2px 6px; /* Justeret padding */
+    width: fit-content;
+    position: relative;
+    border: 1px solid black;
+    border-radius: 50px;
+    background-color: rgb(255, 255, 255);
+  }
+
+  h4 {
+    position: absolute;
+    bottom: 8%;
+    width: 80%;
+    font-family: owners-xxwide, sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+    text-align: left;
+    color: #000000;
+  }
+
+  .image {
+    padding: 12% 10%;
+    aspect-ratio: 1/1;
+    height: auto;
+    z-index: 1;
+  }
+
+  img {
+    object-fit: cover;
+    height: 180px;
+    aspect-ratio: 1/1;
+    width: 180px;
+  }
+</style>

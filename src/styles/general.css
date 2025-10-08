@@ -31,7 +31,7 @@ html {
   font-family: "roundhand-bold";
   font-style: normal;
   font-weight: normal;
-  src: url("/fonts/roundhand_old.woff") format("woff");
+  src: url("/fonts/roundhand_bold.woff") format("woff");
 }
 
 @font-face {

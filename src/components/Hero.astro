@@ -121,6 +121,55 @@
   });
 </script>
 
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const zoomEl = document.querySelector(".zoom");
+    const isMobile = window.innerWidth <= 768;
+
+    // Kun kør på mobile
+    if (!isMobile) return;
+
+    // Custom event listener der lytter til når dit første script er færdigt
+    function checkForMobileZoomComplete() {
+      // Tjek om elementet har zoomed-mobile klasse og overflow er blevet synlig
+      if (
+        zoomEl.classList.contains("zoomed-mobile") &&
+        document.body.style.overflow === "visible"
+      ) {
+        console.log("📱 Mobile zoom komplet detekteret, starter height fix...");
+
+        // Vent 0.1 sekunder efter dit script er færdigt
+        setTimeout(() => {
+          console.log("📱 Ændrer mobile height til 100vh");
+
+          // Fjern transition for at undgå animation
+          zoomEl.style.transition = "none";
+
+          // Ændre height til 100vh
+          zoomEl.style.height = "100vh";
+
+          console.log("📱 Mobile height fix komplet");
+        }, 100); // 0.1 sekunder delay
+
+        return true; // Stop polling
+      }
+      return false; // Fortsæt polling
+    }
+
+    // Poll hver 50ms for at tjekke om dit script er færdigt
+    const pollInterval = setInterval(() => {
+      if (checkForMobileZoomComplete()) {
+        clearInterval(pollInterval);
+      }
+    }, 50);
+
+    // Stop polling efter 5 sekunder som backup
+    setTimeout(() => {
+      clearInterval(pollInterval);
+    }, 5000);
+  });
+</script>
+
 <style>
   .screen {
     position: relative;
@@ -168,7 +217,7 @@
     align-items: center;
   }
 
-  /* Desktop zoom - bruger 100vw (fuld bredde) */
+  /* Desktop zoom - uændret */
   .zoom.zoomed-desktop {
     width: 100vw !important;
     height: 100vh !important;
@@ -177,17 +226,39 @@
     transform: translate(-50%, -50%) !important;
     border-radius: 0 !important;
     z-index: 100;
+    justify-content: center;
+    place-content: center;
   }
 
-  /* Mobile zoom - bruger 100vh (fuld højde) */
+  /* Safari-fix for mobile zoom */
   .zoom.zoomed-mobile {
     width: 275vh !important;
-    height: 750vh !important;
+    height: 750vh;
     left: 50% !important;
     top: 50% !important;
     transform: translate(-50%, -50%) !important;
     border-radius: 0 !important;
     z-index: 100;
+  }
+
+  /* Safari-specifik fix for content container */
+  @supports (-webkit-appearance: none) {
+    /* Dette gælder kun Safari */
+    .zoom.zoomed-mobile .content-container {
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) !important;
+      display: block !important; /* Deaktiver flexbox i Safari */
+    }
+
+    .zoom.zoomed-mobile .text {
+      position: absolute !important;
+      left: 50% !important;
+      top: 50% !important;
+      transform: translate(-50%, -50%) scale(2.2) !important;
+      display: block !important; /* Deaktiver flexbox i Safari */
+    }
   }
 
   .zoom.zoomed-desktop .content-container,
@@ -207,7 +278,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
+    width: fit-content;
     font-family: "helveticaultra_compressed";
     font-size: 230%;
     color: rgb(0, 0, 0);

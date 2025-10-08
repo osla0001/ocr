@@ -12,7 +12,7 @@ import IndexNote from "../components/IndexNote.astro";
     <section id="presentation">
       <div class="presentation-inner">
         <img src="/assets/logo.svg" alt="" class="small_logo" />
-        <h2>osçar’s Portfolio</h2>
+        <h2>osçar's Portfolio</h2>
         <p>
           Denne side er et levende arkiv over mine værker, mine færdigheder og
           de æstetiske tanker, der former min tilgang til design. Her får du et
@@ -22,7 +22,7 @@ import IndexNote from "../components/IndexNote.astro";
           Tag dig tid til at bevæge dig rundt på siden, udforske de små detaljer
           og lade de interaktive elementer føre dig på opdagelse i mit arbejde.
         </p>
-        <img src="/assets/paper_holes.png" alt="" class="background_image" />
+        <img src="/assets/paper_holes.webp" alt="" class="background_image" />
       </div>
     </section>
     <IndexNote />
@@ -30,7 +30,7 @@ import IndexNote from "../components/IndexNote.astro";
     <Letter />
   </section>
 
-  <!-- Snap scroll -->
+  <!-- Snap scroll - kun på desktop -->
   <script is:inline>
     document.addEventListener("DOMContentLoaded", () => {
       const zoomEl = document.querySelector(".zoom");
@@ -38,17 +38,24 @@ import IndexNote from "../components/IndexNote.astro";
       let firstScroll = true;
       let lastSnapTime = Date.now();
 
+      // Tjek om det er desktop (bredde over 768px)
+      const isDesktop = () => window.innerWidth > 768;
+
       function activateSnapScroll() {
-        if (snapScrollActive) return;
+        // Kun aktiver på desktop
+        if (snapScrollActive || !isDesktop()) return;
         snapScrollActive = true;
 
         const sections = Array.from(document.querySelectorAll("section[id]"));
         let isSnapping = false;
 
-        // Desktop: Wheel events
+        // Kun desktop wheel events
         window.addEventListener(
           "wheel",
           (e) => {
+            // Tjek igen om vi stadig er på desktop
+            if (!isDesktop()) return;
+
             const now = Date.now();
             if (isSnapping || now - lastSnapTime < 1500) {
               e.preventDefault();
@@ -60,42 +67,10 @@ import IndexNote from "../components/IndexNote.astro";
           { passive: false },
         );
 
-        // Mobile: Touch events
-        let startY = null;
-        let startTime = null;
-
-        window.addEventListener("touchstart", (e) => {
-          startY = e.touches[0].clientY;
-          startTime = Date.now();
-        });
-
-        window.addEventListener(
-          "touchend",
-          (e) => {
-            if (!startY || !startTime) return;
-
-            const endY = e.changedTouches[0].clientY;
-            const endTime = Date.now();
-            const deltaY = startY - endY;
-            const deltaTime = endTime - startTime;
-
-            // Kun hvis swipe er lang nok og hurtig nok
-            if (Math.abs(deltaY) > 50 && deltaTime < 300) {
-              const now = Date.now();
-              if (isSnapping || now - lastSnapTime < 1500) {
-                e.preventDefault();
-                return;
-              }
-              handleScroll(deltaY > 0 ? "down" : "up", now);
-            }
-
-            startY = null;
-            startTime = null;
-          },
-          { passive: false },
-        );
-
         function handleScroll(direction, now) {
+          // Tjek igen om vi stadig er på desktop
+          if (!isDesktop()) return;
+
           isSnapping = true;
           lastSnapTime = now;
 
@@ -145,14 +120,31 @@ import IndexNote from "../components/IndexNote.astro";
         }
       }
 
-      // Aktiver snap scroll når zoom-animationen er færdig
+      // Aktiver snap scroll når zoom-animationen er færdig (kun på desktop)
       zoomEl.addEventListener("transitionend", (event) => {
         if (
-          event.propertyName === "width" ||
-          event.propertyName === "height" ||
-          event.propertyName === "transform"
+          (event.propertyName === "width" ||
+            event.propertyName === "height" ||
+            event.propertyName === "transform") &&
+          isDesktop() // Tilføj desktop check
         ) {
           activateSnapScroll();
+        }
+      });
+
+      // Deaktiver snap scroll hvis vinduet ændres til mobil størrelse
+      window.addEventListener("resize", () => {
+        if (!isDesktop() && snapScrollActive) {
+          snapScrollActive = false;
+          // Fjern scroll snap CSS på mobil
+          document
+            .querySelector("main")
+            ?.style.setProperty("scroll-snap-type", "none");
+        } else if (isDesktop() && !snapScrollActive) {
+          // Genaktiver scroll snap CSS på desktop
+          document
+            .querySelector("main")
+            ?.style.setProperty("scroll-snap-type", "y mandatory");
         }
       });
     });
@@ -165,15 +157,33 @@ import IndexNote from "../components/IndexNote.astro";
       overflow-x: hidden;
     }
 
-    main {
-      scroll-snap-type: y mandatory;
-      overflow-y: scroll;
-      height: 100vh;
+    /* Snap scroll kun på desktop */
+    @media (min-width: 800px) {
+      main {
+        scroll-snap-type: y mandatory;
+        overflow-y: scroll;
+        height: 100vh;
+      }
+
+      section {
+        scroll-snap-align: start;
+        height: 100vh;
+      }
     }
 
-    section {
-      scroll-snap-align: start;
-      height: 100vh;
+    /* Normal scroll på mobil */
+    @media (max-width: 800px) {
+      main {
+        scroll-snap-type: none;
+        overflow-y: auto;
+        height: auto;
+      }
+
+      section {
+        scroll-snap-align: none;
+        height: auto;
+        min-height: 100vh;
+      }
     }
 
     .additional-content {
@@ -244,7 +254,8 @@ import IndexNote from "../components/IndexNote.astro";
       #presentation {
         padding: 20px;
         height: auto;
-        min-height: 100vh;
+        min-height: 20vh;
+        margin-bottom: 40%;
       }
 
       .background_image {
