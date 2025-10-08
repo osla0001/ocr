@@ -8,64 +8,64 @@ import NavNumber from "./NavNumber.astro";
   <img src="/assets/logo.svg" alt="" class="logo" />
   <h1>osçar's Portfolio</h1>
   <div class="line" style="margin-top: 1rem;"></div>
-  <nav class="main-menu">
-    <ul>
-      <li><a href="/">Forside</a></li>
-      <li><a href="/about">Om mig</a></li>
-      <li><a href="/cv">CV</a></li>
-    </ul>
-  </nav>
-  <nav class="secondary-menu">
-    <ul>
-      <div class="line"></div>
-      <li>Projekter:</li>
-      <li>
-        <a href="/tegnebog" class="number-list">
-          <NavNumber number="01" margin="-1px" /><span class="underline"
-            >Tegnebog</span
-          ></a
-        >
-      </li>
-      <li>
-        <a href="/westcoast" class="number-list">
-          <NavNumber number="02" /><span class="underline">Westcoast</span></a
-        >
-      </li>
-    </ul>
-    <div class="bottom">
-      <div class="line"></div>
-      <div class="flex_row">
-        <a
-          href="http://instagram.com/oscarlaursen"
-          class="icon"
-          target="_blank"
-        >
-          <img src="/icons/instagram.svg" alt="" /></a
-        >
-        <a
-          href="https://www.facebook.com/oscardlaursen"
-          class="icon"
-          target="_blank"
-        >
-          <img src="/icons/facebook.svg" alt="" /></a
-        >
-        <a
-          href="https://www.linkedin.com/in/oscar-damsgaard-laursen-68a304257"
-          class="icon"
-          target="_blank"
-        >
-          <img src="/icons/linkedin.svg" alt="" /></a
-        >
-        <a
-          href="https://dk.pinterest.com/trestjernekastere/"
-          class="icon"
-          target="_blank"
-        >
-          <img src="/icons/pinterest.svg" alt="" /></a
-        >
-      </div>
+
+  <div class="menu-content">
+    <nav class="main-menu">
+      <ul>
+        <li><a href="/">Forside</a></li>
+        <li><a href="/about">Om mig</a></li>
+        <li><a href="/cv">CV</a></li>
+      </ul>
+    </nav>
+    <nav class="secondary-menu">
+      <ul>
+        <div class="line"></div>
+        <li>Projekter:</li>
+        <li>
+          <a href="/tegnebog" class="number-list">
+            <NavNumber number="01" margin="-1px" /><span class="underline"
+              >Tegnebog</span
+            ></a
+          >
+        </li>
+        <li>
+          <a href="/westcoast" class="number-list">
+            <NavNumber number="02" /><span class="underline">Westcoast</span></a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="bottom">
+    <div class="line"></div>
+    <div class="flex_row">
+      <a href="http://instagram.com/oscarlaursen" class="icon" target="_blank">
+        <img src="/icons/instagram.svg" alt="" /></a
+      >
+      <a
+        href="https://www.facebook.com/oscardlaursen"
+        class="icon"
+        target="_blank"
+      >
+        <img src="/icons/facebook.svg" alt="" /></a
+      >
+      <a
+        href="https://www.linkedin.com/in/oscar-damsgaard-laursen-68a304257"
+        class="icon"
+        target="_blank"
+      >
+        <img src="/icons/linkedin.svg" alt="" /></a
+      >
+      <a
+        href="https://dk.pinterest.com/trestjernekastere/"
+        class="icon"
+        target="_blank"
+      >
+        <img src="/icons/pinterest.svg" alt="" /></a
+      >
     </div>
-  </nav>
+  </div>
 </header>
 
 <script type="module">
@@ -175,14 +175,14 @@ import NavNumber from "./NavNumber.astro";
 <style>
   header {
     display: flex;
-    flex-direction: column; /* Gør menuen lodret */
-    height: 100vh; /* Fylder hele højden */
-    width: 250px; /* Fast bredde */
+    flex-direction: column;
+    height: 100vh;
+    width: 250px;
     position: fixed;
     top: 0;
-    right: 0; /* Placer til højre */
-    background: white; /* Baggrundsfarve (kan ændres) */
-    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05); /* Let skygge */
+    right: 0;
+    background: white;
+    box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
     z-index: 1000;
     border-left: 2px solid black;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -190,11 +190,17 @@ import NavNumber from "./NavNumber.astro";
 
   header.collapsed {
     transform: translateX(90%);
-    /* 90% af headeren gemmes, kun 10% vises */
   }
 
   header.expanded {
     transform: translateX(0%);
+  }
+
+  /* Ny wrapper for menu indhold */
+  .menu-content {
+    flex: 1; /* Fylder tilgængelig plads */
+    overflow-y: auto; /* Scroll hvis indhold er for højt */
+    min-height: 0; /* Tillader flex-shrinking */
   }
 
   nav {
@@ -223,12 +229,6 @@ import NavNumber from "./NavNumber.astro";
     display: block;
   }
 
-  /* li {
-    min-height: 2.8rem;
-    overflow: hidden;
-    white-space: nowrap;
-  } */
-
   .main-menu li {
     padding: 0.8rem 0 0.5rem 1rem;
     border-bottom: 2px solid black;
@@ -236,6 +236,10 @@ import NavNumber from "./NavNumber.astro";
 
   .secondary-menu li {
     padding: 0.8rem 0 0 1rem;
+  }
+
+  .secondary-menu {
+    height: fit-content;
   }
 
   .number-list {
@@ -251,6 +255,7 @@ import NavNumber from "./NavNumber.astro";
     width: 70%;
     height: auto;
     margin: 4rem auto 0.8rem auto;
+    flex-shrink: 0; /* Forhindrer logo i at skrumpe */
   }
 
   h1 {
@@ -258,6 +263,7 @@ import NavNumber from "./NavNumber.astro";
     text-align: center;
     font-size: 1.6rem;
     line-height: 1rem;
+    flex-shrink: 0; /* Forhindrer titel i at skrumpe */
   }
 
   .line {
@@ -265,6 +271,7 @@ import NavNumber from "./NavNumber.astro";
     height: 2px;
     background-color: black;
     margin-top: 0.2rem;
+    flex-shrink: 0;
   }
 
   .arrow-indicator {
@@ -287,12 +294,11 @@ import NavNumber from "./NavNumber.astro";
   header.expanded .arrow-indicator {
     opacity: 0;
     transition: opacity 0.3s;
-    /* Pil forsvinder når menuen er åben */
   }
 
   header.collapsed li {
     opacity: 0;
-    pointer-events: none; /* så de ikke kan klikkes */
+    pointer-events: none;
     transition: opacity 0.4s;
   }
 
@@ -366,12 +372,14 @@ import NavNumber from "./NavNumber.astro";
   }
 
   .bottom {
-    position: absolute;
-    bottom: 0;
+    /* Fjernet position: absolute */
     width: 100%;
-    height: 15%;
+    min-height: 120px; /* Minimum højde for ikoner */
     display: flex;
     flex-direction: column;
+    z-index: 5;
+    flex-shrink: 0; /* Forhindrer bottom i at skrumpe */
+    margin-top: auto; /* Skubber til bunden af flex container */
   }
 
   .flex_row {
@@ -416,7 +424,7 @@ import NavNumber from "./NavNumber.astro";
   }
 
   .burger {
-    display: none; /* Skjult som standard */
+    display: none;
   }
 
   @media (max-width: 800px) {
@@ -425,7 +433,7 @@ import NavNumber from "./NavNumber.astro";
     }
 
     .burger {
-      display: block; /* Skjult som standard */
+      display: block;
       width: 40px;
       height: 40px;
       border: 2px solid black;
@@ -457,14 +465,12 @@ import NavNumber from "./NavNumber.astro";
       margin-left: 4px;
     }
 
-    /* Ændre header på mobil */
     header {
-      width: 85vw; /* 90% af skærmbredden */
+      width: 85vw;
     }
 
-    /* Skjul header helt på mobil */
     header.collapsed {
-      transform: translateX(100%); /* Skjul fuldstændigt */
+      transform: translateX(100%);
     }
   }
 </style>
