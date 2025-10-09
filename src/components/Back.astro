@@ -1,0 +1,47 @@
+---
+
+---
+
+<div class="back-container">
+  <a href="#" id="back-link">Tilbage</a>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const backLink = document.getElementById("back-link");
+
+    backLink.addEventListener("click", (e) => {
+      e.preventDefault(); // Forhindrer default link adfærd
+      window.history.back(); // Går tilbage til forrige side
+    });
+  });
+</script>
+
+<style>
+  .back-container {
+    position: absolute;
+    place-self: center;
+    top: 5%;
+    z-index: 1000;
+  }
+
+  a {
+    font-family: "Times New Roman", serif;
+    font-weight: 500;
+    font-size: 75%;
+    text-decoration: none;
+    color: grey;
+    z-index: 10;
+    text-decoration: underline;
+    width: 100%;
+    display: block;
+    text-align: center;
+    transition: 0.3s ease all;
+    cursor: pointer; /* Tilføj cursor pointer */
+  }
+
+  a:hover {
+    opacity: 0.5;
+    transition: 0.3s ease all;
+  }
+</style>

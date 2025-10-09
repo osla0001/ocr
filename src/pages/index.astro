@@ -11,22 +11,61 @@ import IndexNote from "../components/IndexNote.astro";
   <section class="additional-content">
     <section id="presentation">
       <div class="presentation-inner">
-        <img src="/assets/logo.svg" alt="" class="small_logo" />
-        <h2>osçar's Portfolio</h2>
-        <p>
-          Denne side er et levende arkiv over mine værker, mine færdigheder og
-          de æstetiske tanker, der former min tilgang til design. Her får du et
-          indblik i både det digitale håndværk, jeg har skabt ved tastaturet, og
-          de projekter, der tager form uden for skærmens lys. Du finder nyttig
-          viden om min baggrund, mine erfaringer og mine kreative udfoldelser.
-          Tag dig tid til at bevæge dig rundt på siden, udforske de små detaljer
-          og lade de interaktive elementer føre dig på opdagelse i mit arbejde.
-        </p>
-        <img src="/assets/paper_holes.webp" alt="" class="background_image" />
+        <div
+          class="intro_text"
+          data-aos="fade-right"
+          data-aos-duration="500"
+          data-aos-easing="ease-in-sine"
+        >
+          <h2 class="title-animation">osçar's Portfolio</h2>
+          <p>
+            Denne side er et levende arkiv over mine værker, mine færdigheder og
+            de æstetiske tanker, der former min tilgang til design. Her får du
+            et indblik i både det digitale håndværk, jeg har skabt ved
+            tastaturet, og de projekter, der tager form uden for skærmens lys.
+            Du finder nyttig viden om min baggrund, mine erfaringer og mine
+            kreative udfoldelser. Tag dig tid til at bevæge dig rundt på siden,
+            udforske de små detaljer og lade de interaktive elementer føre dig
+            på opdagelse i mit arbejde.
+          </p>
+        </div>
+        <div class="intro_image" data-aos="fade-up" data-aos-duration="1000">
+          <img src="/assets/clip.webp" alt="" class="clip" />
+          <img src="/assets/index_polaroid.webp" alt="" class="polaroid" />
+          <img
+            src="/assets/index_portrait.webp"
+            alt=""
+            class="polaroid_inner"
+          />
+        </div>
       </div>
     </section>
-    <IndexNote />
-    <Blur />
+    <section id="note_section">
+      <div class="note-inner">
+        <div
+          class="intro_text"
+          data-aos="fade-right"
+          data-aos-duration="500"
+          data-aos-easing="ease-in-sine"
+        >
+          <h2 class="title-animation" style="justify-content: right;">
+            Navigation
+          </h2>
+          <p style="text-align: justify; text-align-last: right;">
+            Mit portfolio er skabt som et interaktivt album, der giver et
+            personligt indblik i, hvem jeg er; både som designer og som
+            menneske. Her kan du bevæge dig gennem mine værker og få et indtryk
+            af de tanker og processer, der ligger bag min kreative praksis.
+            Under siden <a href="/about">Om mig</a> kan du læse mere om min baggrund
+            og mine interesser, mens du i sektionen Projekter i menuen kan udforske
+            mine kodede løsninger og digitale eksperimenter. Portfoliet er tænkt
+            som en åben rejse gennem mit visuelle univers, hvor du frit kan gå på
+            opdagelse, klikke dig rundt og lade oplevelsen forme sig undervejs.
+          </p>
+        </div>
+        <IndexNote />
+      </div>
+    </section>
     <Letter />
   </section>
 
@@ -150,6 +189,65 @@ import IndexNote from "../components/IndexNote.astro";
     });
   </script>
 
+  <!-- Title Animation Script - kun desktop -->
+  <script is:inline>
+    document.addEventListener("DOMContentLoaded", () => {
+      // Tjek om det er desktop (bredde over 800px)
+      const isDesktop = () => window.innerWidth > 800;
+
+      // Kun kør på desktop
+      if (!isDesktop()) return;
+
+      const titleElements = document.querySelectorAll(".title-animation");
+
+      if (titleElements.length === 0) return;
+
+      // Intersection Observer til at detektere når .title-animation bliver synlig
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              // Tjek igen om vi stadig er på desktop
+              if (!isDesktop()) return;
+
+              const titleElement = entry.target;
+
+              // Start animationen
+              titleElement.style.animation = "h2Change 0.5s steps(5) infinite";
+
+              // Stop animationen efter 1 sekund
+              setTimeout(() => {
+                titleElement.style.animation = "none";
+              }, 1000);
+
+              // Stop observering af dette specifikke element efter første trigger
+              observer.unobserve(titleElement);
+            }
+          });
+        },
+        {
+          threshold: 0.5, // Trigger når 50% af elementet er synligt
+          rootMargin: "0px",
+        },
+      );
+
+      // Observér alle elementer med .title-animation klassen
+      titleElements.forEach((element) => {
+        observer.observe(element);
+      });
+
+      // Stop animation ved resize til mobil
+      window.addEventListener("resize", () => {
+        if (!isDesktop()) {
+          titleElements.forEach((element) => {
+            element.style.animation = "none";
+            observer.unobserve(element);
+          });
+        }
+      });
+    });
+  </script>
+
   <style>
     html,
     body {
@@ -192,18 +290,30 @@ import IndexNote from "../components/IndexNote.astro";
       transition: opacity 0.1s;
       display: block;
       visibility: hidden;
-      max-width: 70ch;
-      margin: 50px auto 50px auto;
+      max-width: 65%;
       width: 100%;
+      place-self: center;
+    }
+
+    .intro_text {
+      justify-content: space-between;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     h2 {
       font-family: roundhand-regular, sans-serif;
       font-size: 300%;
       font-weight: 300;
-      margin-bottom: 20px;
-      text-align: center;
       margin-bottom: 1px;
+      height: 60px; /* Fast højde i stedet for max-height */
+      flex-shrink: 0; /* Forhindrer shrinking */
+      display: flex;
+      justify-content: left;
+      align-items: center;
+      width: 100%;
+      text-wrap: nowrap;
     }
 
     #presentation {
@@ -216,15 +326,54 @@ import IndexNote from "../components/IndexNote.astro";
     }
 
     .presentation-inner {
-      max-width: 70ch;
+      max-width: 100%;
       margin: 0 auto;
       width: 100%;
       position: relative;
       z-index: 1;
-      text-align: justify;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      align-items: center;
+      gap: 5%;
     }
 
-    .background_image {
+    .intro_image {
+      position: relative;
+      width: 100%;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 15%;
+      margin-bottom: 10%;
+    }
+
+    .clip {
+      position: absolute;
+      width: 20%;
+      place-self: center;
+      top: -4%;
+      margin-left: 0%;
+      z-index: 10;
+    }
+
+    .polaroid {
+      position: relative;
+      width: 70%;
+      place-self: center;
+      filter: drop-shadow(4px 6px 6px rgba(0, 0, 0, 0.25));
+      rotate: 90deg;
+    }
+
+    .polaroid_inner {
+      position: absolute;
+      width: 72%;
+      place-self: center;
+      z-index: -1;
+      margin-left: 9%;
+    }
+
+    /* .background_image {
       position: absolute;
       left: 50%;
       top: 50%;
@@ -235,7 +384,7 @@ import IndexNote from "../components/IndexNote.astro";
       user-select: none;
       object-fit: fill;
       box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.24);
-    }
+    } */
 
     .small_logo {
       display: block;
@@ -248,24 +397,54 @@ import IndexNote from "../components/IndexNote.astro";
       text-align: justify;
       font-family: "Times New Roman", Times, serif;
       font-size: 100%;
+      margin-top: 5px;
     }
 
-    @media (max-width: 768px) {
+    #note_section {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 10%;
+      align-items: center;
+    }
+
+    .note-inner {
+      max-width: 100%;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+      align-items: center;
+      gap: 5%;
+      width: 100%;
+      height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      opacity: 0.5;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+      transition: opacity 0.3s;
+    }
+
+    @media (max-width: 800px) {
       #presentation {
-        padding: 20px;
         height: auto;
         min-height: 20vh;
         margin-bottom: 40%;
       }
 
-      .background_image {
-        display: none;
-      }
-
       .presentation-inner {
-        max-width: 90%;
-        margin: 0 auto;
-        padding: 20px;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 5%;
       }
 
       .small_logo {
@@ -275,11 +454,63 @@ import IndexNote from "../components/IndexNote.astro";
 
       h2 {
         font-size: 250%; /* Større tekst på mobil */
+        text-align: center;
       }
 
       #presentation p {
         font-size: 75%; /* Større tekst på mobil */
         line-height: 1.6;
+      }
+
+      .note-inner {
+        grid-template-columns: 1fr;
+        padding-bottom: 0%;
+      }
+    }
+
+    @keyframes h2Change {
+      0%,
+      19% {
+        font-family: roundhand-regular, sans-serif;
+        font-size: 300%;
+        font-weight: 300;
+        text-transform: none;
+        -webkit-text-stroke: 0px;
+      }
+      20%,
+      39% {
+        font-size: 200%;
+        font-family: "vamones", sans-serif;
+        font-weight: normal;
+        text-transform: lowercase;
+        -webkit-text-stroke: 2px;
+      }
+      40%,
+      59% {
+        font-size: 180%;
+        font-family: "Arial", sans-serif;
+
+        font-weight: 900;
+        text-transform: uppercase;
+        -webkit-text-stroke: 0px;
+      }
+      60%,
+      79% {
+        font-size: 150%;
+        font-family: "Comic Sans MS", cursive;
+
+        font-weight: normal;
+        text-transform: lowercase;
+        -webkit-text-stroke: 3px black;
+      }
+      80%,
+      100% {
+        font-size: 180%;
+        font-family: Helvetica, sans-serif;
+        font-weight: normal;
+        font-style: italic;
+        text-transform: lowercase;
+        -webkit-text-stroke: 0px;
       }
     }
   </style>

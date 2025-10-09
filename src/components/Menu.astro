@@ -72,6 +72,7 @@ import NavNumber from "./NavNumber.astro";
   document.addEventListener("DOMContentLoaded", () => {
     const header = document.getElementById("sideHeader");
     const burger = document.querySelector(".burger");
+    const backButton = document.querySelector(".back a"); // Selecter back button
     let mouseOnHeader = false;
 
     // Tjek om vi er på mobil
@@ -91,9 +92,13 @@ import NavNumber from "./NavNumber.astro";
         if (header.classList.contains("collapsed")) {
           header.classList.remove("collapsed");
           header.classList.add("expanded");
+          // Skjul back button når menu er åben
+          if (backButton) backButton.style.display = "none";
         } else {
           header.classList.remove("expanded");
           header.classList.add("collapsed");
+          // Vis back button når menu er lukket
+          if (backButton) backButton.style.display = "block";
         }
       });
 
@@ -102,6 +107,8 @@ import NavNumber from "./NavNumber.astro";
         link.addEventListener("click", () => {
           header.classList.remove("expanded");
           header.classList.add("collapsed");
+          // Vis back button når menu lukkes
+          if (backButton) backButton.style.display = "block";
         });
       });
 
@@ -114,6 +121,8 @@ import NavNumber from "./NavNumber.astro";
         ) {
           header.classList.remove("expanded");
           header.classList.add("collapsed");
+          // Vis back button når menu lukkes
+          if (backButton) backButton.style.display = "block";
         }
       });
     } else {
@@ -176,7 +185,7 @@ import NavNumber from "./NavNumber.astro";
   header {
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100vh !important;
     width: 250px;
     position: fixed;
     top: 0;

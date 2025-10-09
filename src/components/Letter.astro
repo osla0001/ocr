@@ -14,12 +14,7 @@
     <img src="/assets/letter_top.webp" alt="" class="letter_top" />
     <img src="/assets/letter_closed_top.webp" alt="" class="letter_closed" />
   </div>
-  <div
-    class="letter_content"
-    data-aos="zoom-in"
-    data-aos-offset="200"
-    data-aos-duration="1000"
-  >
+  <div class="letter_content" data-aos="zoom-in" data-aos-duration="900">
     <p>
       KONTAKT MIG PÅ: <br /><a href="mailto:oscardlaursen@gmail.com"
         >oscardlaursen@gmail.com</a
@@ -75,7 +70,7 @@
         entries.forEach((entry) => {
           if (
             entry.isIntersecting &&
-            entry.intersectionRatio >= 0.2 &&
+            entry.intersectionRatio >= 0.3 &&
             !isOpen
           ) {
             openLetter();
@@ -83,7 +78,7 @@
         });
       },
       {
-        threshold: [0.2], // 20% af sektionen skal være synlig
+        threshold: [0.7], // 20% af sektionen skal være synlig
       },
     );
 
@@ -177,7 +172,7 @@
     }
 
     #letter_section {
-      height: 70vh;
+      height: 100vh;
       margin: 0;
     }
   }
